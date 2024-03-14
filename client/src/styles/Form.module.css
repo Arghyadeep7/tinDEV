@@ -1,0 +1,9 @@
+.form {
+  max-height: 90vh;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.form::-webkit-scrollbar {
+  display: none;
+}
