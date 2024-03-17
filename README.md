@@ -66,7 +66,7 @@ Account Database Schema:
 
 Hackathon Projects Schema:
 {
-    "id": objectID,
+    "id": "objectID",
     "name": "string",
     "organiser": "string",
     "date": "date",
@@ -76,21 +76,21 @@ Hackathon Projects Schema:
     "repo": "string",
     "deployed": "string",
     "mustTech": {
-            "id": "number",
-            "name": "string",
-            "rating": "number"
-        },
+        "id": "number",
+        "name": "string",
+        "rating": "number"
+    },
     "prefTech": {
-            "id": "number",
-            "name": "string",
-            "rating": "number"
-        },
+        "id": "number",
+        "name": "string",
+        "rating": "number"
+    },
     "clgPref": {
-            "id": "number",
-            "name": "string"
-        },
+        "id": "number",
+        "name": "string"
+    },
     "links": {
-            "id": "number",
-            "url": "string"
-        }
+        "id": "number",
+        "url": "string"
+    }
 }
