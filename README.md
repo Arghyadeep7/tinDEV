@@ -14,7 +14,7 @@ Account Database:
     pincode: number,
     college: string,
     university: string,
-    roll: number,
+    roll: string,
     course: string,
     ctype: string,
     specialisation: string,
