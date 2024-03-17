@@ -1,5 +1,5 @@
 
-Account Database:
+Account Database Schema:
 {
     id: objectID,
     fname: string,
@@ -71,6 +71,46 @@ Account Database:
         {
             id: number,
             url: string,
+        }
+    ]
+}
+
+
+Hackathon Projects Schema:
+{
+    id: objectID,
+    name: string,
+    organiser: string,
+    date: date,
+    about: string,
+    members: number,
+    cost: number,
+    repo: string,
+    deployed: string,
+    mustTech: [
+        {
+            id: number,
+            name: string,
+            rating: number,
+        },
+    ],
+    prefTech: [
+        {
+            id: number,
+            name: string,
+            rating: number,
+        },
+    ],
+    mustTech: [
+        {
+            id: number,
+            name: string,
+        },
+    ],
+    links: [
+        {
+            id: number,
+            url: string
         }
     ]
 }
