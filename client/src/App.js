@@ -3,6 +3,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import Header from "./components/Header";
 import SignUp from "./components/Forms/SignUp";
 import SignIn from "./components/Forms/SignIn";
+import Interests from "./components/Interests/AAA";
 import Collabs from "./components/Collabs/AAA";
 import New from "./components/New/AAA";
 import Account from "./components/Account/AAA";
@@ -18,6 +19,7 @@ const App = () => {
         <Route path="/" element={<Header />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/signin" element={<SignIn />} />
+        <Route path="/interests" element={<Interests />} />
         <Route path="/collabs" element={<Collabs />} />
         <Route path="/hackathon/:id" element={<HackPage />} />
         <Route path="/new" element={<New />} />

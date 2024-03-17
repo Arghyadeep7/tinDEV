@@ -122,9 +122,13 @@ const Header = () => {
                     <Offcanvas.Body>
                       {pages.map((page) => (
                         <h6 className="mb-4">
-                          <b style={{ cursor: "pointer", color: "#2636bf" }}>
-                            {page.url.toUpperCase()} {page.icon}
-                          </b>
+                          <Link
+                            to={page.url}
+                            style={{ textDecoration: "none" }}
+                            onClick={handleClose}
+                          >
+                            <b>{page.url.toUpperCase()} {page.icon}</b>
+                          </Link>
                         </h6>
                       ))}
                       <div

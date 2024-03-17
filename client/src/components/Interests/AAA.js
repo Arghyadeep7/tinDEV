@@ -27,7 +27,6 @@ const AAA = () => {
       label: "Startup",
     },
   ];
-  
 
   return (
     <Row className="mt-2">
