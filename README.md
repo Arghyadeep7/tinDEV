@@ -20,59 +20,47 @@ Account Database Schema:
     "duration": "number",
     "grad": "number",
     "cstatus": "string",
-    "education": [
-        {
-            "id": "number",
-            "institute": "string",
-            "course": "string",
-            "specialisation": "string",
-            "from": "number",
-            "to": "number",
-            grade: "string""
-        }
-    ],
-    "work": [
-        {
-            "id": "number",
-            "firm": "string",
-            "position": "string",
-            "from": "date",
-            "to": "string",
-        },
-    ],
-    "projects": [
-        {
-            "id": "number",
-            "name": "string",
-            "about": "string",
-            "tech": "string",
-            "repo": "string",
-            "deployed": "string",
-        },
-    ],
-    "skills": [
-        {
-            "id": "string",
-            "name": "string",
-            ""rating"": "number",
-        }
-    ],
-    "certifications": [
-        {
-            "id": "number",
-            "org": "string",
-            "name": "string",
-            "issued": "date",
-            "expiry": "string",
-            "link": "string",
-        },
-    ],
-    "links": [
-        {
-            "id": "number",
-            "url": "string",
-        }
-    ]
+    "education": {
+        "id": "number",
+        "institute": "string",
+        "course": "string",
+        "specialisation": "string",
+        "from": "number",
+        "to": "number",
+        "grade": "string"
+    },
+    "work": {
+        "id": "number",
+        "firm": "string",
+        "position": "string",
+        "from": "date",
+        "to": "string"
+    },
+    "projects": {
+        "id": "number",
+        "name": "string",
+        "about": "string",
+        "tech": "string",
+        "repo": "string",
+        "deployed": "string"
+    },
+    "skills": {
+        "id": "string",
+        "name": "string",
+        "rating": "number"
+    },
+    "certifications": {
+        "id": "number",
+        "org": "string",
+        "name": "string",
+        "issued": "date",
+        "expiry": "string",
+        "link": "string"
+    },
+    "links": {
+        "id": "number",
+        "url": "string"
+    }
 }
 
 
@@ -87,30 +75,22 @@ Hackathon Projects Schema:
     "cost": "number",
     "repo": "string",
     "deployed": "string",
-    "mustTech": [
-        {
+    "mustTech": {
             "id": "number",
             "name": "string",
-            "rating": "number",
+            "rating": "number"
         },
-    ],
-    "prefTech": [
-        {
+    "prefTech": {
             "id": "number",
             "name": "string",
-            "rating": "number",
+            "rating": "number"
         },
-    ],
-    "clgPref": [
-        {
+    "clgPref": {
             "id": "number",
-            "name": "string",
+            "name": "string"
         },
-    ],
-    "links": [
-        {
+    "links": {
             "id": "number",
             "url": "string"
         }
-    ]
 }
