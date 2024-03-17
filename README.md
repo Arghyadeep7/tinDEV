@@ -1,76 +1,76 @@
 
 Account Database Schema:
 {
-    id: objectID,
-    fname: string,
-    lname: string,
-    email: string,
-    password: string,
-    dob: date,
-    gender: string,
-    nationality: string,
-    address: string,
-    pincode: number,
-    college: string,
-    university: string,
-    roll: string,
-    course: string,
-    ctype: string,
-    specialisation: string,
-    duration: number,
-    grad: number,
-    cstatus: string,
-    education: [
+    "id": "objectID",
+    "fname": "string",
+    "lname": "string",
+    "email": "string",
+    "password": "string",
+    "dob": "date",
+    "gender": "string",
+    "nationality": "string",
+    "address": "string",
+    "pincode": "number",
+    "college": "string",
+    "university": "string",
+    "roll": "string",
+    "course": "string",
+    "ctype": "string",
+    "specialisation": "string",
+    "duration": "number",
+    "grad": "number",
+    "cstatus": "string",
+    "education": [
         {
-            id: number,
-            institute: string,
-            course: string,
-            specialisation: string,
-            from: number,
-            to: number,
-            grade: string"
+            "id": "number",
+            "institute": "string",
+            "course": "string",
+            "specialisation": "string",
+            "from": "number",
+            "to": "number",
+            grade: "string""
         }
     ],
-    work: [
+    "work": [
         {
-            id: number,
-            firm: string,
-            position: string,
-            from: date,
-            to: string,
+            "id": "number",
+            "firm": "string",
+            "position": "string",
+            "from": "date",
+            "to": "string",
         },
     ],
-    projects: [
+    "projects": [
         {
-            id: number,
-            name: string,
-            about: string,
-            tech: string,
-            repo: string,
-            deployed: string,
+            "id": "number",
+            "name": "string",
+            "about": "string",
+            "tech": "string",
+            "repo": "string",
+            "deployed": "string",
         },
     ],
-    skills: [
+    "skills": [
         {
-            id: string,
-            name: string,
-            rating: number,
+            "id": "string",
+            "name": "string",
+            ""rating"": "number",
         }
     ],
-    certifications: [
+    "certifications": [
         {
-            id: number,
-            org: string,
-            name: string,
-            issued: date,
-            expiry: string,
-            link: string,
+            "id": "number",
+            "org": "string",
+            "name": "string",
+            "issued": "date",
+            "expiry": "string",
+            "link": "string",
         },
     ],
-    links: [
+    "links": [
         {
-            id: number,
-            url: string,
+            "id": "number",
+            "url": "string",
         }
     ]
 }
@@ -78,39 +78,39 @@ Account Database Schema:
 
 Hackathon Projects Schema:
 {
-    id: objectID,
-    name: string,
-    organiser: string,
-    date: date,
-    about: string,
-    members: number,
-    cost: number,
-    repo: string,
-    deployed: string,
-    mustTech: [
+    "id": objectID,
+    "name": "string",
+    "organiser": "string",
+    "date": "date",
+    "about": "string",
+    "members": "number",
+    "cost": "number",
+    "repo": "string",
+    "deployed": "string",
+    "mustTech": [
         {
-            id: number,
-            name: string,
-            rating: number,
+            "id": "number",
+            "name": "string",
+            "rating": "number",
         },
     ],
-    prefTech: [
+    "prefTech": [
         {
-            id: number,
-            name: string,
-            rating: number,
+            "id": "number",
+            "name": "string",
+            "rating": "number",
         },
     ],
-    mustTech: [
+    "clgPref": [
         {
-            id: number,
-            name: string,
+            "id": "number",
+            "name": "string",
         },
     ],
-    links: [
+    "links": [
         {
-            id: number,
-            url: string
+            "id": "number",
+            "url": "string"
         }
     ]
 }
