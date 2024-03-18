@@ -10,7 +10,7 @@ Account Database Schema:
     "gender": "string",
     "nationality": "string",
     "address": "string",
-    "pincode": "number",
+    "pinCode": "number",
     "college": "string",
     "university": "string",
     "roll": "string",
@@ -60,6 +60,9 @@ Account Database Schema:
     "links": {
         "id": "number",
         "url": "string"
+    },
+    "hackathons": {
+        "id": "string"
     }
 }
 
@@ -67,11 +70,12 @@ Account Database Schema:
 Hackathon Projects Schema:
 {
     "id": "objectID",
+    "owner": "string",
     "name": "string",
     "organiser": "string",
     "date": "date",
     "about": "string",
-    "members": "number",
+    "count": "number",
     "cost": "number",
     "repo": "string",
     "deployed": "string",
@@ -92,5 +96,12 @@ Hackathon Projects Schema:
     "links": {
         "id": "number",
         "url": "string"
+    },
+    "members": {
+      "id": "string",
+      "fname": "string",
+      "lname": "string",
+      "email": "string",
+      "college": "string",
     }
 }
