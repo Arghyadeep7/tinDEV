@@ -102,6 +102,6 @@ Hackathon Projects Schema:
       "fname": "string",
       "lname": "string",
       "email": "string",
-      "college": "string",
+      "college": "string"
     }
 }
