@@ -1,9 +1,9 @@
 const express = require("express");
 const router = express.Router();
 
-const User = require("../models/users");
-const Interest = require("../models/interests");
-const Collab = require("../models/collabs");
+const User = require("../models1/users1");
+const Interest = require("../models1/interests1");
+const Collab = require("../models1/collabs1");
 
 router.post("/", async (req, res, next) => {
   try {
