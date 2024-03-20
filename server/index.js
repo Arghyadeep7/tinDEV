@@ -1,6 +1,6 @@
 require("dotenv").config();
 
-require("./db1/connection1");
+require("./db/connection");
 
 const express = require("express");
 const app = express();
@@ -22,5 +22,5 @@ app.listen(PORT, () => {
   console.log("Server listening on port -", PORT);
 });
 
-const register = require("./routes1/register1");
+const register = require("./routes/register");
 app.use("/register", register);
