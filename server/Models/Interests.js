@@ -11,10 +11,10 @@ const hackSchema = new mongoose.Schema({
 });
 
 const interestSchema = new mongoose.Schema({
-  id: String,
+  _id: String,
   hackArr: [hackSchema]
 });
 
-const Interests = mongoose.model("Interests", interestSchema);
+const Interest = mongoose.model("Interest", interestSchema);
 
-module.exports = Interests;
+module.exports = Interest;

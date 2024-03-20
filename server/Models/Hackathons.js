@@ -47,6 +47,6 @@ const hackSchema = new mongoose.Schema({
   ],
 });
 
-const Hackathons = mongoose.model("Hackathons", hackSchema);
+const Hackathon = mongoose.model("Hackathon", hackSchema);
 
-module.exports = Hackathons;
+module.exports = Hackathon;

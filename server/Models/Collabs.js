@@ -11,10 +11,10 @@ const hackSchema = new mongoose.Schema({
 });
 
 const collabSchema = new mongoose.Schema({
-  id: String,
+  _id: String,
   hackArr: [hackSchema]
 });
 
-const Collabs = mongoose.model("Collabs", collabSchema);
+const Collab = mongoose.model("Collab", collabSchema);
 
-module.exports = Collabs;
+module.exports = Collab;
