@@ -7,14 +7,13 @@ const Collab = require("../models/collabs");
 
 router.post("/", async (req, res, next) => {
   try {
+    
     const data = req.body;
-
-    console.log(req.body);
 
     User.collection.findOne({ email: data.email }, async (err, user) => {
       if (err) {
         return res.json({
-          code: 400,
+          code: 500,
           success: false,
           message: "ERROR OCCURRED-" + err.message,
         });
@@ -45,20 +44,22 @@ router.post("/", async (req, res, next) => {
         hackArr: [],
       }).save();
 
-      next();
       return res.json({
         code: 200,
         success: true,
         message: "REGISTRATION SUCCESSFULL",
-        id: id,
+        _id: id,
       });
     });
+
   } catch (err) {
+    
     return res.json({
-      code: 400,
+      code: 500,
       success: false,
       message: "ERROR OCCURRED-" + err.message,
     });
+
   }
 });
 
