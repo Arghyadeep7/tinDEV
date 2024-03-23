@@ -30,3 +30,9 @@ app.use("/login", login);
 
 const account = require("./routes/account");
 app.use("/account", account);
+
+const hackathon = require("./routes/hackathon");
+app.use("/hackathon", hackathon);
+
+const interest = require("./routes/interest");
+app.use("/interest", interest);

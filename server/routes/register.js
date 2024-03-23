@@ -1,4 +1,5 @@
 const express = require("express");
+const ObjectId = require("mongodb").ObjectId;
 const router = express.Router();
 
 const User = require("../models/users");
@@ -10,7 +11,7 @@ router.post("/", async (req, res, next) => {
     
     const data = req.body;
 
-    User.collection.findOne({ email: data.email }, async (err, user) => {
+    await User.collection.findOne({ email: data.email }, async (err, user) => {
       if (err) {
         return res.json({
           code: 500,
@@ -32,15 +33,15 @@ router.post("/", async (req, res, next) => {
         hackathons: [],
       }).save();
 
-      const id = response._id;
+      // console.log(response._id);
 
       new Interest({
-        _id: id,
+        _id: response._id,
         hackArr: [],
       }).save();
 
       new Collab({
-        _id: id,
+        _id: response._id,
         hackArr: [],
       }).save();
 
@@ -48,7 +49,7 @@ router.post("/", async (req, res, next) => {
         code: 200,
         success: true,
         message: "REGISTRATION SUCCESSFULL",
-        _id: id,
+        _id: response._id,
       });
     });
 

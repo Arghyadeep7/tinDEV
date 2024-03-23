@@ -8,6 +8,9 @@ const hackSchema = new mongoose.Schema({
     email: String,
     college: String,
     hackId: String,
+    name: String,
+    organiser: String,
+    date: String,
 });
 
 const interestSchema = new mongoose.Schema({
