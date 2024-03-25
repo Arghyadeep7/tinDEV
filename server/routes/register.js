@@ -30,18 +30,15 @@ router.post("/", async (req, res, next) => {
         skills: [],
         certifications: [],
         links: [],
-        hackathons: [],
       }).save();
 
-      // console.log(response._id);
-
       new Interest({
-        _id: response._id,
+        _id: new ObjectId(response._id),
         hackArr: [],
       }).save();
 
       new Collab({
-        _id: response._id,
+        _id: new ObjectId(response._id),
         hackArr: [],
       }).save();
 

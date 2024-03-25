@@ -39,7 +39,7 @@ const hackSchema = new mongoose.Schema({
   ],
   members: [
     {
-      id: String,
+      _id: String,
       fname: String,
       lname: String,
       email: String,

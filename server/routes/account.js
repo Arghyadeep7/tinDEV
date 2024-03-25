@@ -4,10 +4,9 @@ const router = express.Router();
 
 const User = require("../models/users");
 
-router.get("/", async (req, res, next) => {
+router.get("/:_id", async (req, res, next) => {
   try {
-    
-    const id = req.body._id;
+    const id = req.params._id;
     const _id = new ObjectId(id);
 
     await User.collection.findOne({ _id }, (err, user) => {
@@ -22,27 +21,29 @@ router.get("/", async (req, res, next) => {
           code: 200,
           success: true,
           message: "USER FOUND",
-          data: user
+          ...user,
         });
       }
     });
-
   } catch (err) {
-    
     return res.json({
       code: 500,
       success: false,
       message: "ERROR OCCURRED-" + err.message,
     });
-    
   }
 });
 
-router.post("/", async (req, res, next) => {
+router.post("/:_id", async (req, res, next) => {
   try {
+    const id = req.params._id;
+    const _id = new ObjectId(id);
     const data = req.body;
 
-    await User.collection.replaceOne({ email: data.email }, data, (err, user) => {
+    await User.collection.replaceOne(
+      { _id },
+      data,
+      (err, result) => {
         if (err) {
           return res.json({
             code: 500,
@@ -50,11 +51,11 @@ router.post("/", async (req, res, next) => {
             message: "ERROR OCCURRED-" + err.message,
           });
         } else {
-          console.log(user);
           return res.json({
             code: 200,
             success: true,
             message: "UPDATION SUCCESSFULL",
+            ...result,
           });
         }
       }

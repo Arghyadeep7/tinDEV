@@ -2,11 +2,11 @@
 const mongoose = require("mongoose");
 
 const hackSchema = new mongoose.Schema({
-    hackId: String,
-    owner: String,
-    ownerId: String,
+    _id: String,
     name: String,
     organiser: String,
+    owner: String,
+    ownerId: String,
     date: String,
 });
 

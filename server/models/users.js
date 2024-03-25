@@ -72,11 +72,6 @@ const userSchema = new mongoose.Schema({
       url: String,
     },
   ],
-  hackathons: [
-    {
-      id: String,
-    },
-  ],
 });
 
 const User = mongoose.model("User", userSchema);
