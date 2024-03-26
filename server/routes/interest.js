@@ -78,7 +78,7 @@ router.post("/:_id", async (req, res, next) => {
 
 router.post("/:_id/accept", async (req, res, next) => {
   try {
-    const _id = new ObjectId(req.params._id);
+    const _id = req.params._id;
     const data = req.body;
 
     const memberId = data.memberId;
@@ -87,7 +87,7 @@ router.post("/:_id/accept", async (req, res, next) => {
     let response = {};
 
     await Hackathon.collection.updateOne(
-      { _id },
+      { _id: new ObjectId(_id) },
       {
         $push: {
           members: {
@@ -132,10 +132,10 @@ router.post("/:_id/accept", async (req, res, next) => {
                 owner: data.owner,
                 ownerId: ownerId,
                 date: data.date,
-              }
+              },
             ],
             $position: 0,
-          }
+          },
         },
       },
       (err, result) => {
@@ -157,7 +157,7 @@ router.post("/:_id/accept", async (req, res, next) => {
     );
 
     await Interest.collection.updateOne(
-      { _id: new ObjectId(ownerId) },
+      { _id: ownerId },
       {
         $pull: {
           hackArr: {
@@ -183,7 +183,6 @@ router.post("/:_id/accept", async (req, res, next) => {
         }
       }
     );
-
   } catch (err) {
     return res.json({
       code: 500,
