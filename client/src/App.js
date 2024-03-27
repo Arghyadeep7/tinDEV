@@ -1,4 +1,7 @@
 import { Routes, Route, Navigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { login } from "../src/store/LoginSlice";
+import { useSelector } from "react-redux";
 
 import Header from "./components/Header";
 import SignUp from "./components/Forms/SignUp";
@@ -12,9 +15,24 @@ import HackPage from "./Pages/HackPage";
 import { Container } from "react-bootstrap";
 
 const App = () => {
+
+  const dispatch = useDispatch();
+
+  const email = localStorage.getItem("email");
+  const password = localStorage.getItem("password");
+
+  if (email !== null && password !== null) {
+    console.log("here");
+    dispatch(login({
+      email, password
+    }));
+  }
+
+  const loggedIn = useSelector((state) => state.login.loggedIn);
+
   return (
     <Container fluid className="ps-4 pe-4">
-      <Header />
+      {loggedIn && <Header />}
       <Routes>
         <Route path="/" element={<Header />} />
         <Route path="/signup" element={<SignUp />} />

@@ -11,8 +11,9 @@ const bodyParser = require("body-parser");
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cors({
-  origin: "http://localhost:3000/"
+app.use(
+  cors({
+    origin: "http://localhost:3000/",
   })
 );
 
@@ -30,6 +31,24 @@ app.use("/login", login);
 
 const account = require("./routes/account");
 app.use("/account", account);
+
+const education = require("./routes/education");
+app.use("/education", education);
+
+const experience = require("./routes/experience");
+app.use("/experience", experience);
+
+const project = require("./routes/project");
+app.use("/project", project);
+
+const skill = require("./routes/skill");
+app.use("/skill", skill);
+
+const certificate = require("./routes/certificate");
+app.use("/certificate", certificate);
+
+const link = require("./routes/link");
+app.use("/link", link);
 
 const hackathon = require("./routes/hackathon");
 app.use("/hackathon", hackathon);

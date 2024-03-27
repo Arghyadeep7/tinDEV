@@ -15,7 +15,10 @@ const hackSchema = new mongoose.Schema({
 
 const interestSchema = new mongoose.Schema({
   _id: String,
-  hackArr: [hackSchema]
+  hackArr: {
+    sent: [hackSchema],
+    received: [hackSchema],
+  }
 });
 
 const Interest = mongoose.model("Interest", interestSchema);

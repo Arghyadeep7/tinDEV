@@ -2,14 +2,22 @@ const express = require("express");
 const ObjectId = require("mongodb").ObjectId;
 const router = express.Router();
 
-const User = require("../models/users");
-const Interest = require("../models/interests");
-const Collab = require("../models/collabs");
+const User = require("../models/Account/user");
+const Education = require("../models/Account/education");
+const Experience = require("../models/Account/experience");
+const Project = require("../models/Account/project");
+const Skill = require("../models/Account/skill");
+const Certificate = require("../models/Account/certificate");
+const Link = require("../models/Account/link");
+
+const Interest = require("../models/interest");
+const Collab = require("../models/collab");
 
 router.post("/", async (req, res, next) => {
   try {
     
     const data = req.body;
+    const _id = new ObjectId();
 
     await User.collection.findOne({ email: data.email }, async (err, user) => {
       if (err) {
@@ -22,31 +30,59 @@ router.post("/", async (req, res, next) => {
         return res.json({ code: 400, success: false, message: "EMAIL EXISTS" });
       }
 
-      const response = await new User({
+      await new User({
+        _id,
         ...data,
-        education: [],
-        work: [],
-        projects: [],
-        skills: [],
-        certifications: [],
-        links: [],
       }).save();
 
-      new Interest({
-        _id: new ObjectId(response._id),
-        hackArr: [],
+      await new Education({
+        _id,
+        arr: [],
       }).save();
 
-      new Collab({
-        _id: new ObjectId(response._id),
+      await new Experience({
+        _id,
+        arr: [],
+      }).save();
+
+      await new Project({
+        _id,
+        arr: [],
+      }).save();
+
+      await new Skill({
+        _id,
+        arr: [],
+      }).save();
+
+      await new Certificate({
+        _id,
+        arr: [],
+      }).save();
+
+      await new Link({
+        _id,
+        arr: [],
+      }).save();
+
+      await new Interest({
+        _id,
+        hackArr: {
+          sent: [],
+          received: []
+        },
+      }).save();
+
+      await new Collab({
+        _id,
         hackArr: [],
       }).save();
 
       return res.json({
+        _id,
         code: 200,
         success: true,
         message: "REGISTRATION SUCCESSFULL",
-        _id: response._id,
       });
     });
 

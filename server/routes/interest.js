@@ -2,9 +2,9 @@ const express = require("express");
 const ObjectId = require("mongoose").Types.ObjectId;
 const router = express.Router();
 
-const Interest = require("../models/interests");
-const Hackathon = require("../models/hackathons");
-const Collab = require("../models/collabs");
+const Interest = require("../models/interest");
+const Hackathon = require("../models/hackathon");
+const Collab = require("../models/collab");
 
 router.get("/:_id", async (req, res, next) => {
   try {

@@ -70,6 +70,7 @@ const Header = () => {
                 <b
                   className="ms-4"
                   style={{ cursor: "pointer", color: "#2636bf" }}
+                  key={page.url}
                 >
                   <Link style={{ textDecoration: "none" }} to={`/${page.url}`}>
                     {page.url.toUpperCase()}
@@ -121,7 +122,7 @@ const Header = () => {
                     </Offcanvas.Header>
                     <Offcanvas.Body>
                       {pages.map((page) => (
-                        <h6 className="mb-4">
+                        <h6 className="mb-4" key={page.url}>
                           <Link
                             to={page.url}
                             style={{ textDecoration: "none" }}
