@@ -20,12 +20,6 @@ const userSchema = new mongoose.Schema({
   duration: Number,
   grad: Number,
   status: String,
-  links: [
-    {
-      id: Number,
-      url: String,
-    },
-  ],
 });
 
 const User = mongoose.model("User", userSchema);
