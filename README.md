@@ -1,1 +1,1 @@
-To get to know the structure/schema of all databases, go to /server/models
+# [Click here](https://github.com/Arghyadeep7/tinDEV/tree/master/server/models) to get to know the structure/schema of all databases
