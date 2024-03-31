@@ -8,7 +8,7 @@ import { FaPlus } from "react-icons/fa6";
 import { BiSave } from "react-icons/bi";
 import { MdOutlineDelete } from "react-icons/md";
 
-const Education = () => {
+const Education = ({ _id }) => {
   const [edu, setEdu] = useState(education);
 
   const changeHandler = (event) => {

@@ -8,7 +8,7 @@ import { FaPlus } from "react-icons/fa6";
 import { BiSave } from "react-icons/bi";
 import { MdOutlineDelete } from "react-icons/md";
 
-const Certificates = () => {
+const Certificates = ({ _id }) => {
   const [c, setC] = useState(certifications);
 
   const date = new Date();

@@ -36,7 +36,7 @@ const AccountSlice = createSlice({
       state.gender = action.payload.gender;
       state.nationality = action.payload.nationality;
       state.address = action.payload.address;
-      state.pincode = action.payload.pincode;
+      state.pinCode = action.payload.pinCode;
       state.college = action.payload.college;
       state.university = action.payload.university;
       state.roll = action.payload.roll;
@@ -44,7 +44,7 @@ const AccountSlice = createSlice({
       state.type = action.payload.type;
       state.specialisation = action.payload.specialisation;
       state.duration = action.payload.duration;
-      state.graduation = action.payload.graduation;
+      state.grad = action.payload.grad;
       state.status = action.payload.status;
     },
     logout(_state, action){

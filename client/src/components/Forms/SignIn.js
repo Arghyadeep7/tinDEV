@@ -51,8 +51,6 @@ const SignIn = () => {
     });
   };
 
-  console.log(state);
-
   return (
     <>
       <Row>
@@ -81,6 +79,7 @@ const SignIn = () => {
                     type={field.type}
                     label={field.label}
                     className="mt-4"
+                    key={field.label}
                   >
                     <Form.Control
                       type={field.type}

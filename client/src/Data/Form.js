@@ -44,7 +44,7 @@ export const signup = [
     required: true,
   },
   {
-    label: "Nationality*",
+    label: "Country*",
     type: "select",
     options: [
       "India",

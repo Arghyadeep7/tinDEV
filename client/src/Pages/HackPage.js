@@ -12,7 +12,7 @@ import { MdOutlineDelete } from "react-icons/md";
 import styles from "../styles/Common.module.css";
 
 const HackPage = () => {
-  const { id } = useParams();
+  const { _id } = useParams();
 
   const [active, setActive] = useState("About");
 
@@ -33,42 +33,42 @@ const HackPage = () => {
     cost: 250,
     mustTech: [
       {
-        id: "M1",
+        _id: "M1",
         name: "C++",
         rating: 80,
       },
       {
-        id: "M2",
+        _id: "M2",
         name: "Python",
         rating: 65,
       },
       {
-        id: "M3",
+        _id: "M3",
         name: "Java",
         rating: 70,
       },
     ],
     prefTech: [
       {
-        id: "P1",
+        _id: "P1",
         name: "C",
         rating: 80,
       },
       {
-        id: "P2",
+        _id: "P2",
         name: "JavaScript",
         rating: 70,
       },
     ],
     clgPref: [
       {
-        id: "C1",
+        _id: "C1",
         name: "XYZ",
       },
     ],
     links: [
       {
-        id: "L1",
+        _id: "L1",
         url: "https://arghya-deep-pal.vercel.app",
       },
     ],
@@ -100,17 +100,17 @@ const HackPage = () => {
   };
 
   const arrayChangeHandler = (event) => {
-    const id = event.target.id;
+    const _id = event.target._id;
     const label = event.target.name;
     const val = event.target.value;
 
-    // console.log(id, label, val);
+    // console.log(_id, label, val);
 
-    if (id[0] === "M") {
+    if (_id[0] === "M") {
       const arr = h.mustTech.map((obj) => {
-        if (obj.id === id) {
+        if (obj._id === _id) {
           if (label === "Name") {
-            return { ...obj, id: "M" + val, name: val };
+            return { ...obj, _id: "M" + val, name: val };
           }
 
           return {
@@ -125,11 +125,11 @@ const HackPage = () => {
       setH((e) => {
         return { ...e, mustTech: arr };
       });
-    } else if (id[0] === "P") {
+    } else if (_id[0] === "P") {
       const arr = h.prefTech.map((obj) => {
-        if (obj.id === id) {
+        if (obj._id === _id) {
           if (label === "Name") {
-            return { ...obj, id: "P" + val, name: val };
+            return { ...obj, _id: "P" + val, name: val };
           }
 
           return {
@@ -144,10 +144,10 @@ const HackPage = () => {
       setH((e) => {
         return { ...e, prefTech: arr };
       });
-    } else if (id[0] === "C") {
+    } else if (_id[0] === "C") {
       setH((e) => {
         const arr = e.clgPref.map((obj) => {
-          if (String(obj.id) === id) {
+          if (String(obj._id) === _id) {
             return { ...obj, name: val };
           }
 
@@ -160,7 +160,7 @@ const HackPage = () => {
 
     setH((e) => {
       const arr = e.links.map((obj) => {
-        if (String(obj.id) === id) {
+        if (String(obj._id) === _id) {
           return { ...obj, url: val };
         }
 
@@ -172,9 +172,9 @@ const HackPage = () => {
   };
 
   const addHandler = (event) => {
-    const id = event.target.id;
+    const _id = event.target._id;
 
-    if (id === "M") {
+    if (_id === "M") {
       let count = h.mustTech.length + 1;
       setH((e) => {
         return {
@@ -182,14 +182,14 @@ const HackPage = () => {
           mustTech: [
             ...e.mustTech,
             {
-              id: "M" + count,
+              _id: "M" + count,
               name: "C++",
               rating: 0,
             },
           ],
         };
       });
-    } else if (id === "P") {
+    } else if (_id === "P") {
       let count = h.prefTech.length + 1;
       setH((e) => {
         return {
@@ -197,14 +197,14 @@ const HackPage = () => {
           prefTech: [
             ...e.prefTech,
             {
-              id: "P" + count,
+              _id: "P" + count,
               name: "C++",
               rating: 0,
             },
           ],
         };
       });
-    } else if (id === "C") {
+    } else if (_id === "C") {
       let count = h.clgPref.length + 1;
       setH((e) => {
         return {
@@ -212,7 +212,7 @@ const HackPage = () => {
           clgPref: [
             ...e.clgPref,
             {
-              id: "C" + count,
+              _id: "C" + count,
               name: "",
             },
           ],
@@ -227,7 +227,7 @@ const HackPage = () => {
         links: [
           ...e.links,
           {
-            id: "L" + count,
+            _id: "L" + count,
             url: "",
           },
         ],
@@ -236,15 +236,15 @@ const HackPage = () => {
   };
 
   const deleteHandler = (event) => {
-    const id = event.target.id;
+    const _id = event.target._id;
     var count = 1;
-    if (id[0] === "M") {
+    if (_id[0] === "M") {
       const arr = h.mustTech
-        .filter((tech) => tech.id !== id)
+        .filter((tech) => tech._id !== _id)
         .map((tech) => {
           return {
             ...tech,
-            id: "M" + count++,
+            _id: "M" + count++,
           };
         });
       setH((e) => {
@@ -253,13 +253,13 @@ const HackPage = () => {
           mustTech: arr,
         };
       });
-    } else if (id[0] === "P") {
+    } else if (_id[0] === "P") {
       const arr = h.prefTech
-        .filter((tech) => tech.id !== id)
+        .filter((tech) => tech._id !== _id)
         .map((tech) => {
           return {
             ...tech,
-            id: "P" + count++,
+            _id: "P" + count++,
           };
         });
       setH((e) => {
@@ -268,13 +268,13 @@ const HackPage = () => {
           prefTech: arr,
         };
       });
-    } else if (id[0] === "C") {
+    } else if (_id[0] === "C") {
       const arr = h.clgPref
-        .filter((clg) => clg.id !== id)
+        .filter((clg) => clg._id !== _id)
         .map((clg) => {
           return {
             ...clg,
-            id: "C" + count++,
+            _id: "C" + count++,
           };
         });
       setH((e) => {
@@ -286,11 +286,11 @@ const HackPage = () => {
     }
 
     const arr = h.links
-      .filter((link) => link.id !== id)
+      .filter((link) => link._id !== _id)
       .map((link) => {
         return {
           ...link,
-          id: "L" + count++,
+          _id: "L" + count++,
         };
       });
     setH((e) => {
@@ -307,15 +307,15 @@ const HackPage = () => {
 
   const tabs = [
     {
-      id: 1,
+      _id: 1,
       label: "About",
     },
     {
-      id: 2,
+      _id: 2,
       label: "Skills",
     },
     {
-      id: 3,
+      _id: 3,
       label: "References",
     },
   ];
@@ -370,7 +370,7 @@ const HackPage = () => {
                 backgroundColor: "white",
               }}
             >
-              <h4>{h.name + "- [" + id + "]"}</h4>
+              <h4>{h.name + "- [" + _id + "]"}</h4>
               <Button variant="outline-primary" size="sm" type="submit">
                 Save <BiSave size={20} />
               </Button>
@@ -502,7 +502,7 @@ const HackPage = () => {
                 <div className="d-flex justify-content-between mt-2">
                   <h5>Required Skills</h5>
                   <Button
-                    id="M"
+                    _id="M"
                     variant="outline-dark"
                     size="sm"
                     onClick={addHandler}
@@ -517,11 +517,11 @@ const HackPage = () => {
                   <>
                     <Col xs={6} md={4} lg={2}>
                       <FloatingLabel
-                        label={`Technology-${tech.id.substring(1)}`}
+                        label={`Technology-${tech._id.substring(1)}`}
                       >
                         <Form.Select
                           required
-                          id={tech.id}
+                          _id={tech._id}
                           type="text"
                           name="Name"
                           value={tech.name}
@@ -542,7 +542,7 @@ const HackPage = () => {
                     <Col xs={6} md={2} lg={2}>
                       <FloatingLabel label="Rating">
                         <Form.Control
-                          id={tech.id}
+                          _id={tech._id}
                           required
                           type="number"
                           name="Rating"
@@ -558,7 +558,7 @@ const HackPage = () => {
                         <Button
                           variant="danger"
                           onClick={deleteHandler}
-                          id={tech.id}
+                          _id={tech._id}
                           size="sm"
                         >
                           Delete <MdOutlineDelete size={20} />
@@ -571,7 +571,7 @@ const HackPage = () => {
                 <div className="d-flex justify-content-between mt-4">
                   <h5 className="mt-1">Additional Skills</h5>
                   <Button
-                    id="P"
+                    _id="P"
                     variant="outline-dark"
                     size="sm"
                     className="me-2"
@@ -587,11 +587,11 @@ const HackPage = () => {
                   <>
                     <Col xs={6} md={4} lg={2}>
                       <FloatingLabel
-                        label={`Technology-${tech.id.substring(1)}`}
+                        label={`Technology-${tech._id.substring(1)}`}
                       >
                         <Form.Select
                           required
-                          id={tech.id}
+                          _id={tech._id}
                           type="text"
                           name="Name"
                           value={tech.name}
@@ -612,7 +612,7 @@ const HackPage = () => {
                     <Col xs={6} md={2} lg={2}>
                       <FloatingLabel label="Rating">
                         <Form.Control
-                          id={tech.id}
+                          _id={tech._id}
                           required
                           type="number"
                           name="Rating"
@@ -628,7 +628,7 @@ const HackPage = () => {
                         <Button
                           variant="danger"
                           onClick={deleteHandler}
-                          id={tech.id}
+                          _id={tech._id}
                           size="sm"
                         >
                           Delete <MdOutlineDelete size={20} />
@@ -641,7 +641,7 @@ const HackPage = () => {
                 <div className="d-flex justify-content-between mt-4">
                   <h5 className="mt-1">College Preference</h5>
                   <Button
-                    id="C"
+                    _id="C"
                     variant="outline-dark"
                     size="sm"
                     className="me-2"
@@ -654,11 +654,11 @@ const HackPage = () => {
                   <h6 className="mt-4">No college preference</h6>
                 )}
                 {h.clgPref.map((clg) => (
-                  <Col sm={6} md={4} lg={3} xl={2} key={clg.id.substring(1)}>
-                    <FloatingLabel label={`College-${clg.id.substring(1)}`}>
+                  <Col sm={6} md={4} lg={3} xl={2} key={clg._id.substring(1)}>
+                    <FloatingLabel label={`College-${clg._id.substring(1)}`}>
                       <Form.Control
                         required
-                        id={clg.id}
+                        _id={clg._id}
                         type="text"
                         name="Clg pref"
                         value={clg.name}
@@ -673,7 +673,7 @@ const HackPage = () => {
                       <Button
                         variant="danger"
                         onClick={deleteHandler}
-                        id={clg.id}
+                        _id={clg._id}
                         size="sm"
                       >
                         Delete <MdOutlineDelete size={20} />
@@ -689,7 +689,7 @@ const HackPage = () => {
                 <div className="d-flex justify-content-between mt-2">
                   <h5>Reference Links</h5>
                   <Button
-                    id="L"
+                    _id="L"
                     variant="outline-dark"
                     size="sm"
                     onClick={addHandler}
@@ -701,11 +701,11 @@ const HackPage = () => {
                   <h6 className="mt-4">No reference links provided</h6>
                 )}
                 {h.links.map((link) => (
-                  <Col sm={6} md={4} key={link.id}>
-                    <FloatingLabel label={`Link-${link.id.substring(1)}`}>
+                  <Col sm={6} md={4} key={link._id}>
+                    <FloatingLabel label={`Link-${link._id.substring(1)}`}>
                       <Form.Control
                         required
-                        id={link.id}
+                        _id={link._id}
                         type="text"
                         name="Link"
                         value={link.url}
@@ -720,7 +720,7 @@ const HackPage = () => {
                       <Button
                         variant="danger"
                         onClick={deleteHandler}
-                        id={link.id}
+                        _id={link._id}
                         size="sm"
                       >
                         Delete <MdOutlineDelete size={20} />

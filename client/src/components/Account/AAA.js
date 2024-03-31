@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useParams } from "react-router-dom";
 
 import Personal from "./Personal";
 import Education from "./Education";
@@ -15,6 +16,9 @@ import { account } from "../../Data/Account";
 import styles from "../../styles/Common.module.css";
 
 const AAA = () => {
+
+  const { _id } = useParams();  
+
   const [active, setActive] = useState("Personal");
 
   return (
@@ -59,13 +63,13 @@ const AAA = () => {
         className="mt-2"
       >
         <div className={styles.common}>
-          {active === "Personal" && <Personal />}
-          {active === "Education" && <Education />}
-          {active === "Experience" && <Experience />}
-          {active === "Projects" && <Projects />}
-          {active === "Skills" && <Skills />}
-          {active === "Certificates" && <Certificates />}
-          {active === "Links" && <Links />}
+          {active === "Personal" && <Personal _id={_id} />}
+          {active === "Education" && <Education _id={_id} />}
+          {active === "Experience" && <Experience _id={_id} />}
+          {active === "Projects" && <Projects _id={_id} />}
+          {active === "Skills" && <Skills _id={_id} />}
+          {active === "Certificates" && <Certificates _id={_id} />}
+          {active === "Links" && <Links _id={_id} />}
         </div>
       </Col>
     </Row>

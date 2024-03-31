@@ -8,7 +8,7 @@ import { FaPlus } from "react-icons/fa6";
 import { BiSave } from "react-icons/bi";
 import { MdOutlineDelete } from "react-icons/md";
 
-const Experience = () => {
+const Experience = ({ _id }) => {
   const [w, setW] = useState(work);
 
   const date = new Date();

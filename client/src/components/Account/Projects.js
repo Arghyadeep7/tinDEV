@@ -8,7 +8,7 @@ import { FaPlus } from "react-icons/fa6";
 import { BiSave } from "react-icons/bi";
 import { MdOutlineDelete } from "react-icons/md";
 
-const Projects = () => {
+const Projects = ({ _id }) => {
   const [p, setP] = useState(projects);
 
   const changeHandler = (event) => {

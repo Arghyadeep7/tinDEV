@@ -15,37 +15,77 @@ import HackPage from "./Pages/HackPage";
 import { Container } from "react-bootstrap";
 
 const App = () => {
+    const dispatch = useDispatch();
 
-  const dispatch = useDispatch();
+    const email = localStorage.getItem("email");
+    const password = localStorage.getItem("password");
 
-  const email = localStorage.getItem("email");
-  const password = localStorage.getItem("password");
+    if (email !== null && password !== null) {
+        dispatch(
+            login({
+                email,
+                password,
+            })
+        );
+    }
 
-  if (email !== null && password !== null) {
-    console.log("here");
-    dispatch(login({
-      email, password
-    }));
-  }
+    const loggedIn = useSelector((state) => state.login.loggedIn);
+    const _id = useSelector((state) => state.account._id);
 
-  const loggedIn = useSelector((state) => state.login.loggedIn);
+    console.log(_id);
 
-  return (
-    <Container fluid className="ps-4 pe-4">
-      {loggedIn && <Header />}
-      <Routes>
-        <Route path="/" element={<Header />} />
-        <Route path="/signup" element={<SignUp />} />
-        <Route path="/signin" element={<SignIn />} />
-        <Route path="/interests" element={<Interests />} />
-        <Route path="/collabs" element={<Collabs />} />
-        <Route path="/hackathon/:id" element={<HackPage />} />
-        <Route path="/new" element={<New />} />
-        <Route path="/account" element={<Account />} />
-        <Route path="*" element={<Navigate to="/" />} />
-      </Routes>
-    </Container>
-  );
+    return (
+        <Container fluid className="ps-4 pe-4">
+            {loggedIn && <Header />}
+            <Routes>
+                <Route
+                    path="/signup"
+                    element={
+                        !loggedIn ? <SignUp /> : <Navigate to="/account" />
+                    }
+                />
+                <Route
+                    path="/signin"
+                    element={
+                        !loggedIn ? (
+                            <SignIn />
+                        ) : (
+                            <Navigate to={"/account/"} />
+                        )
+                    }
+                />
+                <Route
+                    path="/account"
+                    element={loggedIn ? <Account /> : <Navigate to="/signin" />}
+                />
+                <Route
+                    path="/"
+                    element={loggedIn ? <Header /> : <Navigate to="/signin" />}
+                />
+                <Route
+                    path="/interests"
+                    element={
+                        loggedIn ? <Interests /> : <Navigate to="/signin" />
+                    }
+                />
+                <Route
+                    path="/collabs"
+                    element={loggedIn ? <Collabs /> : <Navigate to="/signin" />}
+                />
+                <Route
+                    path="/hackathon/:_id"
+                    element={
+                        loggedIn ? <HackPage /> : <Navigate to="/signin" />
+                    }
+                />
+                <Route
+                    path="/new"
+                    element={loggedIn ? <New /> : <Navigate to="/signin" />}
+                />
+                <Route path="*" element={<Navigate to="/" />} />
+            </Routes>
+        </Container>
+    );
 };
 
 export default App;

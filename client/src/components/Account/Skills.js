@@ -15,7 +15,7 @@ import { FaPlus } from "react-icons/fa6";
 import { BiSave } from "react-icons/bi";
 import { MdOutlineDelete } from "react-icons/md";
 
-const Skills = () => {
+const Skills = ({ _id }) => {
   const [s, setS] = useState(skills);
 
   const changeHandler = (event) => {

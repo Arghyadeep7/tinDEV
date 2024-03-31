@@ -12,15 +12,15 @@ app.use(express.json());
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(
-  cors({
-    origin: "http://localhost:3000/",
-  })
+	cors({
+		origin: "http://localhost:3000",
+	})
 );
 
 const PORT = 8000 || process.env.PORT;
 
 app.listen(PORT, () => {
-  console.log("Server listening on port -", PORT);
+	console.log("Server listening on port -", PORT);
 });
 
 const register = require("./routes/register");

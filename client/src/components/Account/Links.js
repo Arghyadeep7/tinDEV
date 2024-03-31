@@ -8,7 +8,7 @@ import { FaPlus } from "react-icons/fa6";
 import { BiSave } from "react-icons/bi";
 import { MdOutlineDelete } from "react-icons/md";
 
-const Links = () => {
+const Links = ({ _id }) => {
   const [l, setL] = useState(links);
 
   const changeHandler = (event) => {
