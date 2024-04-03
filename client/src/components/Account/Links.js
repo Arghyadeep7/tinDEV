@@ -1,23 +1,42 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import { Row, Col, Form, Button, FloatingLabel } from "react-bootstrap";
-
-import { links } from "../../Data/Account";
 
 import { FaPlus } from "react-icons/fa6";
 import { BiSave } from "react-icons/bi";
 import { MdOutlineDelete } from "react-icons/md";
 
-const Links = ({ _id }) => {
-  const [l, setL] = useState(links);
+const Links = ({ url_id }) => {
+  const [l, setL] = useState({});
+  const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+      const request = async () => {
+        const response = await fetch(
+            process.env.REACT_APP_FETCH_URL + "/links/" + url_id,
+            {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            }
+        ).then((res) => res.json());
+
+        console.log(response);
+
+        setL(response.arr);
+      };
+      request();
+      setLoading(false);
+    }, [url_id]);
 
   const changeHandler = (event) => {
-    const id = event.target.id;
+    const _id = event.target.id;
     const val = event.target.value;
 
     setL((e) => {
       return e.map((obj) => {
-        if (String(obj.id) === id) {
+        if (String(obj._id) === _id) {
           return {
             ...obj,
             url: val.trim(),
@@ -34,21 +53,21 @@ const Links = ({ _id }) => {
     setL((e) => [
       ...e,
       {
-        id: count,
+        _id: count,
         url: "",
       },
     ]);
   };
 
   const deleteHandler = (event) => {
-    const id = event.target.id;
+    const _id = event.target.id;
     var count = 1;
     const arr = l
-      .filter((link) => String(link.id) !== id)
+      .filter((link) => String(link._id) !== _id)
       .map((link) => {
         return {
           ...link,
-          id: count++,
+          _id: count++,
         };
       });
 
@@ -57,6 +76,7 @@ const Links = ({ _id }) => {
 
   const submitHandler = (event) => {
     event.preventDefault();
+    console.log(l);
   };
 
   return (
@@ -86,37 +106,42 @@ const Links = ({ _id }) => {
         </div>
       </div>
       <Row>
-        {l.length === 0 && <h5 className="mt-4">No Link entered.</h5>}
-        {l.map((link) => (
-          <Col sm={6} key={link.id}>
-            <FloatingLabel type="text" label={`Link-${link.id}`}>
-              <Form.Control
-                id={link.id}
-                type="text"
-                name="Link"
-                value={link.url}
-                style={{
-                  fontWeight: "bold",
-                  color: "blue",
-                  textDecoration: "underline",
-                }}
-                className="mt-3"
-                onChange={changeHandler}
-                required
-              />
-            </FloatingLabel>
-            <div className="d-flex justify-content-end mt-2 mb-1">
-              <Button
-                variant="danger"
-                onClick={deleteHandler}
-                id={link.id}
-                size="sm"
-              >
-                Delete <MdOutlineDelete size={20} />
-              </Button>
-            </div>
-          </Col>
-        ))}
+        {loading? <h5>Loading...</h5>
+          :
+          <>        
+            {l.length === 0 && <h5 className="mt-4">No Link entered.</h5>}
+            {l.length > 0 && l.map((link) => (
+              <Col sm={6} key={link._id}>
+                <FloatingLabel type="text" label={`Link-${link._id}`}>
+                  <Form.Control
+                    id={link._id}
+                    type="text"
+                    name="Link"
+                    value={link.url}
+                    style={{
+                      fontWeight: "bold",
+                      color: "blue",
+                      textDecoration: "underline",
+                    }}
+                    className="mt-3"
+                    onChange={changeHandler}
+                    required
+                  />
+                </FloatingLabel>
+                <div className="d-flex justify-content-end mt-2 mb-1">
+                  <Button
+                    variant="danger"
+                    onClick={deleteHandler}
+                    id={link._id}
+                    size="sm"
+                  >
+                    Delete <MdOutlineDelete size={20} />
+                  </Button>
+                </div>
+              </Col>
+            ))}
+          </>
+        }
       </Row>
     </Form>
   );

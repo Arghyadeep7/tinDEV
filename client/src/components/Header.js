@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { logout } from "../store/LoginSlice";
+import { logout } from "../store/AccountSlice";
 
 import { Link } from "react-router-dom";
 
@@ -12,7 +12,6 @@ import { FaBars } from "react-icons/fa";
 import { ImCross } from "react-icons/im";
 
 const Header = () => {
-
     const _id = useSelector((state) => state.account._id);
 
     const dispatch = useDispatch();
@@ -44,26 +43,33 @@ const Header = () => {
 
     const pages = [
         {
-            url: "home",
+            label: "Home",
+            url: "/home",
         },
         {
-            url: "connect",
+            label: "Connect",
+            url: "/connect",
         },
         {
-            url: "interests",
+            label: "Interests",
+            url: "/interests",
         },
         {
-            url: "collabs",
+            label: "Collabs",
+            url: "/collabs",
         },
         {
-            url: "new",
+            label: "New",
+            url: "/new",
         },
         {
-            url: "account" + _id,
+            label: "Account",
+            url: "/account/" + _id,
         },
     ];
 
     const logoutHandler = () => {
+        console.log("here");
         dispatch(logout());
     };
 
@@ -90,9 +96,9 @@ const Header = () => {
                                 >
                                     <Link
                                         style={{ textDecoration: "none" }}
-                                        to={`/${page.url}`}
+                                        to={page.url}
                                     >
-                                        {page.url.toUpperCase()}
+                                        {page.label.toUpperCase()}
                                     </Link>
                                 </b>
                             ))}
@@ -113,6 +119,7 @@ const Header = () => {
                                             cursor: "pointer",
                                             color: "red",
                                         }}
+                                        onClick={logoutHandler}
                                     />
                                     <FaBars
                                         className="ms-4"
@@ -165,7 +172,7 @@ const Header = () => {
                                                         onClick={handleClose}
                                                     >
                                                         <b>
-                                                            {page.url.toUpperCase()}{" "}
+                                                            {page.label.toUpperCase()}{" "}
                                                             {page.icon}
                                                         </b>
                                                     </Link>

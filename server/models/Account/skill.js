@@ -2,7 +2,7 @@
 const mongoose = require("mongoose");
 
 const arrSchema = new mongoose.Schema({
-    _id: Number,
+    _id: String,
     name: String,
     rating: Number,
 });

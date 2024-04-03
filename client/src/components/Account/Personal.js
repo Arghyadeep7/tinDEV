@@ -6,29 +6,29 @@ import { Form, Row, Col, Button, FloatingLabel } from "react-bootstrap";
 
 import { BiSave } from "react-icons/bi";
 
-const Personal = ({ _id }) => {
-    const [p, setP] = useState(account);
+const Personal = ({ url_id }) => {
+    const [p, setP] = useState({});
     const [loading, setLoading] = useState(true);
 
-    const request = async () => {
-        const response = await fetch(
-            process.env.REACT_APP_FETCH_URL +
-                "/account/6609b5efc386564cc97c2f18",
-            {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            }
-        ).then((res) => res.json());
-
-        setP(response.user);
-        setLoading(false);
-    };
-
     useEffect(() => {
+        const request = async () => {
+            const response = await fetch(
+                process.env.REACT_APP_FETCH_URL + "/account/" + url_id,
+                {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                }
+            ).then((res) => res.json());
+
+            console.log(response);
+
+            setP(response.user);
+        };
         request();
-    }, []);
+        setLoading(false);
+    }, [url_id]);
 
     const changeHandler = (event) => {
         const label = event.target.name;

@@ -8,7 +8,7 @@ router.get("/:_id", async (req, res, next) => {
     try {
         const _id = req.params._id;
 
-        await User.collection.findOne({ _id }, (err, user) => {
+        await User.collection.findOne({ _id }, (err, result) => {
             if (err) {
                 return res.json({
                     code: 500,
@@ -20,7 +20,7 @@ router.get("/:_id", async (req, res, next) => {
                     code: 200,
                     success: true,
                     message: "USER FOUND",
-                    user: user,
+                    user: result,
                 });
             }
         });

@@ -8,14 +8,14 @@ router.post("/", async (req, res, next) => {
     
     const { email, password } = req.body;
 
-    await User.collection.findOne({ email, password }, (err, user) => {
+    await User.collection.findOne({ email, password }, (err, result) => {
       if (err) {
         return res.json({
           code: 400,
           success: false,
           message: "ERROR OCCURRED-" + err.message,
         });
-      } else if (user === null) {
+      } else if (result === null) {
         return res.json({
           code: 404,
           success: false,
@@ -26,6 +26,7 @@ router.post("/", async (req, res, next) => {
         code: 200,
         success: true,
         message: "USER FOUND",
+        user: result,
       });
     });
 

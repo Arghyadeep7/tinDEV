@@ -1,7 +1,8 @@
+import { useEffect } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { login } from "../src/store/LoginSlice";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+
+import { login, logout } from "./store/AccountSlice";
 
 import Header from "./components/Header";
 import SignUp from "./components/Forms/SignUp";
@@ -14,25 +15,50 @@ import HackPage from "./Pages/HackPage";
 
 import { Container } from "react-bootstrap";
 
-const App = () => {
+const App = () => {    
+
     const dispatch = useDispatch();
 
     const email = localStorage.getItem("email");
     const password = localStorage.getItem("password");
 
-    if (email !== null && password !== null) {
-        dispatch(
-            login({
-                email,
-                password,
-            })
-        );
-    }
+    useEffect(() => {
+        const request = async () => {
+            const response = await fetch(
+                process.env.REACT_APP_FETCH_URL + "/login/",
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        email,
+                        password
+                    })
+                },                
+            ).then((res) => res.json());
+                 
+            if (response.code === 200) {
+                dispatch(
+                    login({
+                        _id: response.user._id,
+                        email,
+                        password,
+                    })
+                );
+            }else{
+                dispatch(logout());
+            }
+        };
 
-    const loggedIn = useSelector((state) => state.login.loggedIn);
+        if(email !== null && password !== null){
+            request();
+        }
+
+    }, [dispatch, email, password]);
+
+    const loggedIn = useSelector((state) => state.account.loggedIn);
     const _id = useSelector((state) => state.account._id);
-
-    console.log(_id);
 
     return (
         <Container fluid className="ps-4 pe-4">
@@ -41,7 +67,11 @@ const App = () => {
                 <Route
                     path="/signup"
                     element={
-                        !loggedIn ? <SignUp /> : <Navigate to="/account" />
+                        !loggedIn ? (
+                            <SignUp />
+                        ) : (
+                            <Navigate to={"/account/" + _id} />
+                        )
                     }
                 />
                 <Route
@@ -50,13 +80,19 @@ const App = () => {
                         !loggedIn ? (
                             <SignIn />
                         ) : (
-                            <Navigate to={"/account/"} />
+                            <Navigate to={"/account/" + _id} />
                         )
                     }
                 />
                 <Route
-                    path="/account"
-                    element={loggedIn ? <Account /> : <Navigate to="/signin" />}
+                    path="/account/:url_id"
+                    element={
+                        loggedIn ? (
+                            <Account _id={_id} />
+                        ) : (
+                            <Navigate to="/signin" />
+                        )
+                    }
                 />
                 <Route
                     path="/"

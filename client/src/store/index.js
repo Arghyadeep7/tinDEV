@@ -1,25 +1,27 @@
-import {configureStore} from '@reduxjs/toolkit';
+import {configureStore, combineReducers} from '@reduxjs/toolkit';
+import { persistReducer,FLUSH,REHYDRATE,PAUSE,PERSIST,PURGE,REGISTER, } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
 
-import loginReducer from "./LoginSlice";
 import accountReducer from "./AccountSlice";
-import educationReducer from "./EducationSlice";
-import experienceReducer from "./ExperienceSlice";
-import projectReducer from "./ProjectSlice";
-import skillReducer from "./SkillSlice";
-import certficateReducer from "./CertificateSlice";
-import linkReducer from "./LinkSlice";
+
+const persistConfig = {
+    key: 'root',
+    storage,
+};
+
+const reducer=combineReducers({
+    account: accountReducer,
+})
+
+const persistedReducer=persistReducer(persistConfig,reducer);
 
 const store=configureStore({
-    reducer:{
-        login: loginReducer,
-        account: accountReducer,
-        education: educationReducer,
-        experience: experienceReducer,
-        project: projectReducer,
-        skill: skillReducer,
-        certificate: certficateReducer,
-        link: linkReducer,
-    }
+    reducer:persistedReducer,
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware({
+        serializableCheck: {
+            ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+          }
+    }),
 });
 
 export default store;

@@ -1,34 +1,3 @@
-export const tabs = [
-    {
-        label: "Personal",
-        choice: 1,
-    },
-    {
-        label: "Education",
-        choice: 2,
-    },
-    {
-        label: "Experience",
-        choice: 3,
-    },
-    {
-        label: "Projects",
-        choice: 4,
-    },
-    {
-        label: "Skills",
-        choice: 5,
-    },
-    {
-        label: "Certificates",
-        choice: 6,
-    },
-    {
-        label: "Links",
-        choice: 7,
-    },
-];
-
 export const countries = [
     "India",
     "Afghanistan",
@@ -229,6 +198,226 @@ export const countries = [
     "Zimbabwe",
 ];
 
+export const technologies = [
+    "AWS",
+    "Angular",
+    "Assembly",
+    "Atom",
+    "Azure",
+    "Bash",
+    "Bootstrap",
+    "C",
+    "C#",
+    "C++",
+    "COBOL",
+    "CSS",
+    "Clojure",
+    "Dart",
+    "Django",
+    "Docker",
+    "Eclipse",
+    "Elixir",
+    "Elm",
+    "Erlang",
+    "Express.js",
+    "F#",
+    "Firebase",
+    "Flask",
+    "Fortran",
+    "Git",
+    "Go",
+    "Google Cloud Platform",
+    "GraphQL",
+    "Groovy",
+    "HTML",
+    "Haskell",
+    "IntelliJ IDEA",
+    "Java",
+    "JavaScript",
+    "Jira",
+    "Julia",
+    "Kotlin",
+    "Kubernetes",
+    "Lua",
+    "Matlab",
+    "MongoDB",
+    "MySQL",
+    "Next.js",
+    "Node.js",
+    "OCaml",
+    "Objective-C",
+    "OpenGL",
+    "PHP",
+    "Pascal",
+    "Perl",
+    "PostgreSQL",
+    "PowerShell",
+    "Prolog",
+    "PyTorch",
+    "Python",
+    "R",
+    "RESTful API",
+    "React",
+    "Redis",
+    "Ruby",
+    "Rust",
+    "SOAP",
+    "SQL",
+    "SQLite",
+    "Scala",
+    "Scheme",
+    "Shell",
+    "Slack",
+    "Smalltalk",
+    "Spring",
+    "Sublime Text",
+    "Swift",
+    "Tcl",
+    "TensorFlow",
+    "TypeScript",
+    "Unity",
+    "VBA",
+    "Visual Basic",
+    "Visual Studio Code",
+    "Vue.js",
+    "WebAssembly",
+    "Wolfram Language",
+    "XML",
+    "XPath",
+    "XQuery",
+    "Xamarin",
+    "Zig",
+];
+
+export const signin = [
+    {
+        label: "Email Address*",
+        type: "email",
+        required: true,
+    },
+    {
+        label: "Password*",
+        type: "password",
+        required: true,
+    },
+];
+
+export const signup = [
+    {
+        label: "First Name*",
+        type: "text",
+        required: true,
+    },
+    {
+        label: "Last Name",
+        type: "text",
+        required: false,
+    },
+    {
+        label: "Date of Birth*",
+        type: "date",
+        required: true,
+    },
+    {
+        label: "Email Address*",
+        type: "email",
+        required: true,
+    },
+    {
+        label: "Password*",
+        type: "password",
+        required: true,
+    },
+    {
+        label: "Gender*",
+        type: "select",
+        options: ["Male", "Female", "Others", "Prefer not to disclose"],
+        required: true,
+    },
+    {
+        label: "Country*",
+        type: "select",
+        options: countries,
+        required: true,
+    },
+    {
+        label: "Address*",
+        type: "text",
+        required: true,
+    },
+    {
+        label: "Pincode*",
+        type: "number",
+        required: true,
+    },
+    {
+        label: "College*",
+        type: "text",
+        required: true,
+    },
+    {
+        label: "University*",
+        type: "text",
+        required: true,
+    },
+    {
+        label: "University Roll*",
+        type: "text",
+        required: true,
+    },
+    {
+        label: "Course*",
+        type: "select",
+        default: "Select Course",
+        options: [
+            "B. Tech.",
+            "M. Tech.",
+            "B. Eng.",
+            "M. Eng.",
+            "B. B. A.",
+            "M. B. A.",
+            "B. Sc.",
+            "M. Sc.",
+            "B. Com.",
+            "M. Com.",
+            "B. C. A.",
+            "M. C. A.",
+            "B. A.",
+            "B. Ed.",
+            "PhD",
+            "Others",
+        ],
+        required: true,
+    },
+    {
+        label: "Course Type*",
+        type: "select",
+        options: ["Full-Time", "Part-Time"],
+        required: true,
+    },
+    {
+        label: "Specialisation*",
+        type: "text",
+        required: true,
+    },
+    {
+        label: "Course Duration (Years)*",
+        type: "number",
+        required: true,
+    },
+    {
+        label: "Year of Graduation*",
+        type: "number",
+        required: true,
+    },
+    {
+        label: "Course Status*",
+        type: "select",
+        options: ["Pursuing", "Completed"],
+        required: true,
+    },
+];
+
 export const account = [
     {
         label: "First Name",
@@ -359,5 +548,36 @@ export const account = [
         required: true,
         options: ["Pursuing", "Completed"],
         field: "status",
+    },
+];
+
+export const tabs = [
+    {
+        label: "Personal",
+        choice: 1,
+    },
+    {
+        label: "Education",
+        choice: 2,
+    },
+    {
+        label: "Experience",
+        choice: 3,
+    },
+    {
+        label: "Projects",
+        choice: 4,
+    },
+    {
+        label: "Skills",
+        choice: 5,
+    },
+    {
+        label: "Certificates",
+        choice: 6,
+    },
+    {
+        label: "Links",
+        choice: 7,
     },
 ];

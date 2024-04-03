@@ -3,8 +3,7 @@ const mongoose = require("mongoose");
 
 const arrSchema = new mongoose.Schema({
     _id: Number,
-    name: String,
-    rating: Number,
+    url: String,    
 });
 
 const linkSchema = new mongoose.Schema({
