@@ -12,15 +12,15 @@ app.use(express.json());
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(
-	cors({
-		origin: "https://tindev7.vercel.app",
-	})
+    cors({
+        origin: "mongodb+srv://arghyadeep100:GNvUw9Jj3Yvu00tj@cluster0.gtmn67m.mongodb.net/tindevDB",
+    })
 );
 
 const PORT = 8000 || process.env.PORT;
 
 app.listen(PORT, () => {
-	console.log("Server listening on port -", PORT);
+    console.log("Server listening on port -", PORT);
 });
 
 const register = require("./routes/register");
