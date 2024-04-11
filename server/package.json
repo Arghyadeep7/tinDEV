@@ -1,29 +1,30 @@
 {
-  "name": "server",
-  "version": "1.0.0",
-  "description": "tinDEV Server",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon index.js"
-  },
-  "engines": {
-    "node": "14.x"
-  },
-  "author": "Arghya Deep Pal",
-  "license": "ISC",
-  "dependencies": {
-    "body-parser": "^1.20.2",
-    "cors": "^2.8.5",
-    "dotenv": "^16.4.5",
-    "express": "^4.18.3",
-    "mongodb": "^6.4.0",
-    "mongoose": "^8.2.0",
-    "nodemon": "^3.1.0"
-  },
-  "devDependencies": {
-    "eslint": "^8.57.0",
-    "eslint-config-google": "^0.14.0",
-    "eslint-plugin-react": "^7.34.1"
-  }
+    "name": "server",
+    "version": "1.0.0",
+    "description": "tinDEV Server",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "nodemon index.js",
+        "build": "npm i"
+    },
+    "engines": {
+        "node": "18.x"
+    },
+    "author": "Arghya Deep Pal",
+    "license": "ISC",
+    "dependencies": {
+        "body-parser": "^1.20.2",
+        "cors": "^2.8.5",
+        "dotenv": "^16.4.5",
+        "express": "^4.18.3",
+        "mongodb": "^6.4.0",
+        "mongoose": "^8.2.0",
+        "nodemon": "^3.1.0"
+    },
+    "devDependencies": {
+        "eslint": "^8.57.0",
+        "eslint-config-google": "^0.14.0",
+        "eslint-plugin-react": "^7.34.1"
+    }
 }
