@@ -13,7 +13,7 @@ app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(
     cors({
-        origin: "mongodb+srv://arghyadeep100:GNvUw9Jj3Yvu00tj@cluster0.gtmn67m.mongodb.net/tindevDB",
+        origin: "http://localhost:3000",
     })
 );
 
