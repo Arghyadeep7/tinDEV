@@ -13,27 +13,27 @@ const hackSchema = new mongoose.Schema({
   deployed: String,
   mustTech: [
     {
-      id: Number,
+      _id: Number,
       name: String,
       rating: Number,
     },
   ],
   prefTech: [
     {
-      id: Number,
+      _id: Number,
       name: String,
       rating: Number,
     },
   ],
   clgPref: [
     {
-      id: Number,
+      _id: Number,
       name: String,
     },
   ],
   links: [
     {
-      id: Number,
+      _id: Number,
       url: String,
     },
   ],

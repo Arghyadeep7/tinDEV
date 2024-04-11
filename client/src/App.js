@@ -96,7 +96,7 @@ const App = () => {
                 />
                 <Route
                     path="/"
-                    element={loggedIn ? <Header /> : <Navigate to="/signin" />}
+                    element={loggedIn ? <Navigate to={"/account/" + _id} /> : <Navigate to="/signin" />}
                 />
                 <Route
                     path="/interests"
@@ -106,7 +106,7 @@ const App = () => {
                 />
                 <Route
                     path="/collabs"
-                    element={loggedIn ? <Collabs /> : <Navigate to="/signin" />}
+                    element={loggedIn ? <Collabs _id={_id}/> : <Navigate to="/signin" />}
                 />
                 <Route
                     path="/hackathon/:_id"
@@ -116,7 +116,7 @@ const App = () => {
                 />
                 <Route
                     path="/new"
-                    element={loggedIn ? <New /> : <Navigate to="/signin" />}
+                    element={loggedIn ? <New _id={_id}/> : <Navigate to="/signin" />}
                 />
                 <Route path="*" element={<Navigate to="/" />} />
             </Routes>

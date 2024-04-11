@@ -5,10 +5,12 @@ import { Row, Col, Form, Button, FloatingLabel } from "react-bootstrap";
 import { FaPlus } from "react-icons/fa6";
 import { BiSave } from "react-icons/bi";
 import { MdOutlineDelete } from "react-icons/md";
+import { ImBlocked } from "react-icons/im";
 
 const Certificates = ({ url_id }) => {
-    const [c, setC] = useState({});
+    const [c, setC] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [saving, setSave] = useState(false);
 
     useEffect(() => {
         const request = async () => {
@@ -22,7 +24,7 @@ const Certificates = ({ url_id }) => {
                 }
             ).then((res) => res.json());
 
-            console.log(response);
+            //console.log(response);
 
             setC(response.arr);
         };
@@ -113,7 +115,29 @@ const Certificates = ({ url_id }) => {
 
     const submitHandler = (event) => {
         event.preventDefault();
-        console.log(c);
+
+        setSave(true);
+        const request = async () => {
+            const response = await fetch(
+                process.env.REACT_APP_FETCH_URL + "/certificates/" + url_id,
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(c),
+                }
+            ).then((res) => res.json());
+
+            if (response.code === 500) {
+                alert("Some Error has occurred. Please try again later.");
+            } else {
+                alert("Details Saved");
+            }
+        };
+
+        request();
+        setSave(false);
     };
 
     return (
@@ -134,11 +158,25 @@ const Certificates = ({ url_id }) => {
                         size="sm"
                         className="me-2"
                         onClick={addhandler}
+                        disabled={saving || loading}
                     >
                         Add <FaPlus size={20} />
                     </Button>
-                    <Button variant="outline-primary" size="sm" type="submit">
-                        Save <BiSave size={20} />
+                    <Button
+                        variant="outline-primary"
+                        size="sm"
+                        type="submit"
+                        disabled={saving || loading}
+                    >
+                        {saving ? (
+                            <>
+                                Saving <ImBlocked size={20} />
+                            </>
+                        ) : (
+                            <>
+                                Save <BiSave size={20} />
+                            </>
+                        )}
                     </Button>
                 </div>
             </div>
@@ -166,6 +204,7 @@ const Certificates = ({ url_id }) => {
                                             className="mt-3"
                                             onChange={changeHandler}
                                             required
+                                            disabled={saving || loading}
                                         />
                                     </FloatingLabel>
                                 </Col>
@@ -183,6 +222,7 @@ const Certificates = ({ url_id }) => {
                                             className="mt-3"
                                             onChange={changeHandler}
                                             required
+                                            disabled={saving || loading}
                                         />
                                     </FloatingLabel>
                                 </Col>
@@ -201,6 +241,7 @@ const Certificates = ({ url_id }) => {
                                             onChange={changeHandler}
                                             max={dt}
                                             required
+                                            disabled={saving || loading}
                                         />
                                     </FloatingLabel>
                                 </Col>
@@ -222,6 +263,7 @@ const Certificates = ({ url_id }) => {
                                             className="mt-3"
                                             onChange={changeHandler}
                                             required
+                                            disabled={saving || loading}
                                         />
                                     </FloatingLabel>
                                 </Col>
@@ -242,6 +284,7 @@ const Certificates = ({ url_id }) => {
                                             }}
                                             className="mt-3"
                                             onChange={changeHandler}
+                                            disabled={saving || loading}
                                         />
                                     </FloatingLabel>
                                 </Col>
@@ -257,12 +300,14 @@ const Certificates = ({ url_id }) => {
                                                 ? true
                                                 : false
                                         }
+                                        disabled={saving || loading}
                                     />
                                     <Button
                                         variant="danger"
                                         onClick={deleteHandler}
                                         id={cert._id}
                                         size="sm"
+                                        disabled={saving || loading}
                                     >
                                         Delete <MdOutlineDelete size={20} />
                                     </Button>

@@ -51,7 +51,7 @@ const link = require("./routes/link");
 app.use("/links", link);
 
 const hackathon = require("./routes/hackathon");
-app.use("/hackathon", hackathon);
+app.use("/hackathons", hackathon);
 
 const interest = require("./routes/interest");
 app.use("/interest", interest);

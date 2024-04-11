@@ -2,36 +2,19 @@ import { useState } from "react";
 
 import Hackathon from "./Hackathon";
 
+import { scope } from "../../Format/Main";
+
 import { Row, Col } from "react-bootstrap";
 
 import styles from "../../styles/Common.module.css";
 
 const AAA = () => {
-  const [active, setActive] = useState("Hackathon");
-
-  const tabs = [
-    {
-      id: 1,
-      label: "Hackathon",
-    },
-    {
-      id: 2,
-      label: "Personal",
-    },
-    {
-      id: 3,
-      label: "Open Source",
-    },
-    {
-      id: 4,
-      label: "Startup",
-    },
-  ];
+  const [active, setActive] = useState("Hackathon");  
 
   return (
     <Row className="mt-2">
       <Col md={2} className="mt-1 d-none d-md-block">
-        {tabs.map((tab) => (
+        {scope.map((tab) => (
           <h6
             onClick={() => setActive(tab.label)}
             style={{
@@ -51,7 +34,7 @@ const AAA = () => {
         lg={1}
         className={`me-5 d-md-none d-flex justify-content-around ${styles.mobile}`}
       >
-        {tabs.map((tab) => (
+        {scope.map((tab) => (
           <h6
             onClick={() => setActive(tab.label)}
             style={{

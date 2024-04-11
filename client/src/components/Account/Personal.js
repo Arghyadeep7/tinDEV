@@ -5,10 +5,13 @@ import { account } from "../../Format/Main";
 import { Form, Row, Col, Button, FloatingLabel } from "react-bootstrap";
 
 import { BiSave } from "react-icons/bi";
+import { ImBlocked } from "react-icons/im";
 
 const Personal = ({ url_id }) => {
-    const [p, setP] = useState({});
+    const [p, setP] = useState([]);
     const [loading, setLoading] = useState(true);
+
+    const [saving, setSave] = useState(false);
 
     useEffect(() => {
         const request = async () => {
@@ -22,7 +25,7 @@ const Personal = ({ url_id }) => {
                 }
             ).then((res) => res.json());
 
-            console.log(response);
+            //console.log(response);
 
             setP(response.user);
         };
@@ -118,7 +121,31 @@ const Personal = ({ url_id }) => {
 
     const submitHandler = (event) => {
         event.preventDefault();
-        console.log(p);
+
+        //console.log(p);
+
+        setSave(true);
+        const request = async () => {
+            const response = await fetch(
+                process.env.REACT_APP_FETCH_URL + "/account/" + url_id,
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(p),
+                }
+            ).then((res) => res.json());
+
+            if (response.code === 500) {
+                alert("Some Error has occurred. Please try again later.");
+            } else {
+                alert("Details Saved");
+            }
+        };
+
+        request();
+        setSave(false);
     };
 
     return (
@@ -141,8 +168,17 @@ const Personal = ({ url_id }) => {
                             variant="outline-primary"
                             size="sm"
                             type="submit"
+                            disabled={saving || loading}
                         >
-                            Save <BiSave size={20} />
+                            {saving ? (
+                                <>
+                                    Saving <ImBlocked size={20} />
+                                </>
+                            ) : (
+                                <>
+                                    Save <BiSave size={20} />
+                                </>
+                            )}
                         </Button>
                     </div>
                     <Row>
@@ -156,6 +192,7 @@ const Personal = ({ url_id }) => {
                                             className="mt-3"
                                             onChange={changeHandler}
                                             value={p[detail.field]}
+                                            disabled={saving || loading}
                                         >
                                             {detail.options.map((option) => (
                                                 <option
@@ -175,6 +212,7 @@ const Personal = ({ url_id }) => {
                                             style={{ fontWeight: "bold" }}
                                             className="mt-3"
                                             onChange={changeHandler}
+                                            disabled={saving || loading}
                                         />
                                     )}
                                 </FloatingLabel>

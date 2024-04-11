@@ -36,10 +36,11 @@ router.get("/:_id", async (req, res, next) => {
 router.post("/:_id", async (req, res, next) => {
   try {
 
-    const data = req.body;
+    const arr = req.body;    
+
     const _id = req.params._id;
 
-    await Project.collection.replaceOne({ _id }, data, (err, result) => {
+    await Project.collection.replaceOne({ _id }, {_id, arr}, (err, result) => {
       if (err) {
         return res.json({
           code: 500,

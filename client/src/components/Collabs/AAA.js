@@ -2,19 +2,19 @@ import { useState } from "react";
 
 import Hackathon from "./Hackathon";
 
-import { tabs } from "../../Data/Collabs";
+import { scope } from "../../Format/Main";
 
 import { Row, Col } from "react-bootstrap";
 
 import styles from "../../styles/Common.module.css";
 
-const AAA = () => {
+const AAA = ({ _id }) => {
   const [active, setActive] = useState("Hackathon");
 
   return (
     <Row className="mt-2">
       <Col md={2} className="mt-1 d-none d-md-block">
-        {tabs.map((tab) => (
+        {scope.map((tab) => (
           <h6
             onClick={() => setActive(tab.label)}
             style={{
@@ -34,7 +34,7 @@ const AAA = () => {
         lg={1}
         className={`me-5 d-md-none d-flex justify-content-around ${styles.mobile}`}
       >
-        {tabs.map((tab) => (
+        {scope.map((tab) => (
           <h6
             onClick={() => setActive(tab.label)}
             style={{
@@ -51,7 +51,7 @@ const AAA = () => {
       </Col>
       <Col sm={12} md={10} style={{ position: "relative" }} className="mt-2">
         <div className={styles.common}>
-          {active === "Hackathon" && <Hackathon />}
+          {active === "Hackathon" && <Hackathon _id={_id}/>}
         </div>
       </Col>
     </Row>

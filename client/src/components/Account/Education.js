@@ -1,14 +1,18 @@
 import { useState, useEffect } from "react";
 
+import { options } from "../../Format/Main";
+
 import { Form, Row, Col, Button, FloatingLabel } from "react-bootstrap";
 
 import { FaPlus } from "react-icons/fa6";
 import { BiSave } from "react-icons/bi";
 import { MdOutlineDelete } from "react-icons/md";
+import { ImBlocked } from "react-icons/im";
 
 const Education = ({ url_id }) => {
-    const [edu, setEdu] = useState({});
+    const [edu, setEdu] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [saving, setSave] = useState(false);
 
     useEffect(() => {
         const request = async () => {
@@ -22,7 +26,7 @@ const Education = ({ url_id }) => {
                 }
             ).then((res) => res.json());
 
-            console.log(response);
+            //console.log(response);
 
             setEdu(response.arr);
         };
@@ -38,24 +42,6 @@ const Education = ({ url_id }) => {
                 _id: count,
                 institute: "",
                 course: "B. Tech.",
-                options: [
-                    "B. Tech.",
-                    "M. Tech.",
-                    "B. Eng.",
-                    "M. Eng.",
-                    "B. B. A.",
-                    "M. B. A.",
-                    "B. Sc.",
-                    "M. Sc.",
-                    "B. Com.",
-                    "M. Com.",
-                    "B. C. A.",
-                    "M. C. A.",
-                    "B. A.",
-                    "B. Ed.",
-                    "PhD",
-                    "Others",
-                ],
                 specialisation: "",
                 from: "",
                 to: "",
@@ -67,9 +53,7 @@ const Education = ({ url_id }) => {
     const changeHandler = (event) => {
         const _id = event.target.id;
         const label = event.target.name;
-        const val = event.target.value;
-
-        // console.log("here", _id, label, val);
+        const val = event.target.value;        
 
         setEdu((e) => {
             return e.map((obj) => {
@@ -119,7 +103,28 @@ const Education = ({ url_id }) => {
     const submitHandler = (event) => {
         event.preventDefault();
 
-        console.log(edu);
+        setSave(true);
+        const request = async () => {
+            const response = await fetch(
+                process.env.REACT_APP_FETCH_URL + "/educations/" + url_id,
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(edu),
+                }
+            ).then((res) => res.json());
+
+            if (response.code === 500) {
+                alert("Some Error has occurred. Please try again later.");
+            } else {
+                alert("Details Saved");
+            }
+        };
+
+        request();
+        setSave(false);
     };
 
     return (
@@ -140,11 +145,20 @@ const Education = ({ url_id }) => {
                         size="sm"
                         className="me-2"
                         onClick={addhandler}
+                        disabled={loading || saving}
                     >
                         Add <FaPlus size={20} />
                     </Button>
-                    <Button variant="outline-primary" size="sm" type="submit">
-                        Save <BiSave size={20} />
+                    <Button variant="outline-primary" size="sm" type="submit" disabled={loading || saving}>
+                        {saving ? (
+                            <>
+                                Saving <ImBlocked size={20} />
+                            </>
+                        ) : (
+                            <>
+                                Save <BiSave size={20} />
+                            </>
+                        )}
                     </Button>
                 </div>
             </div>
@@ -171,6 +185,7 @@ const Education = ({ url_id }) => {
                                             style={{ fontWeight: "bold" }}
                                             className="mt-3"
                                             required
+                                            disabled={loading || saving}
                                             onChange={changeHandler}
                                         />
                                     </FloatingLabel>
@@ -188,6 +203,7 @@ const Education = ({ url_id }) => {
                                             style={{ fontWeight: "bold" }}
                                             className="mt-3"
                                             required
+                                            disabled={loading || saving}
                                             onChange={changeHandler}
                                         />
                                     </FloatingLabel>
@@ -199,10 +215,12 @@ const Education = ({ url_id }) => {
                                             name="Course"
                                             style={{ fontWeight: "bold" }}
                                             className="mt-3"
+                                            required
+                                            disabled={loading || saving}
                                             onChange={changeHandler}
                                             value={ed.course}
                                         >
-                                            {ed.options.map((option) => (
+                                            {options.map((option) => (
                                                 <option
                                                     value={option}
                                                     key={option}
@@ -223,6 +241,7 @@ const Education = ({ url_id }) => {
                                             style={{ fontWeight: "bold" }}
                                             className="mt-3 pe-1"
                                             required
+                                            disabled={loading || saving}
                                             onChange={changeHandler}
                                         />
                                     </FloatingLabel>
@@ -237,6 +256,7 @@ const Education = ({ url_id }) => {
                                             style={{ fontWeight: "bold" }}
                                             className="mt-3 pe-1"
                                             required
+                                            disabled={loading || saving}
                                             onChange={changeHandler}
                                         />
                                     </FloatingLabel>
@@ -251,6 +271,7 @@ const Education = ({ url_id }) => {
                                             style={{ fontWeight: "bold" }}
                                             className="mt-3 pe-1"
                                             required
+                                            disabled={loading || saving}
                                             onChange={changeHandler}
                                         />
                                     </FloatingLabel>
@@ -260,6 +281,7 @@ const Education = ({ url_id }) => {
                                         variant="danger"
                                         onClick={deleteHandler}
                                         id={ed._id}
+                                        disabled={loading || saving}
                                         size="sm"
                                     >
                                         Delete <MdOutlineDelete size={20} />

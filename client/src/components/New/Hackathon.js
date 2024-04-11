@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, Fragment } from "react";
 
 import { technologies } from "../../Format/Main";
 
@@ -8,64 +8,28 @@ import { FaPlus } from "react-icons/fa6";
 import { BiSave } from "react-icons/bi";
 import { MdOutlineDelete } from "react-icons/md";
 
-const Hackathon = () => {
+const Hackathon = ({ _id }) => {
     const date = new Date();
-    const day = date.getDate() < 9 ? "0" + date.getDate() : date.getDate();
+    const day = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
     const month =
-        date.getMonth() < 9 ? "0" + (date.getMonth() + 1) : 1 + date.getMonth();
-    const today = date.getFullYear() + "-" + month + "-" + day;
+        date.getMonth() < 10 ? "0" + (date.getMonth() + 1) : 1 + date.getMonth();
+    const today = date.getFullYear() + "-" + month + "-" + day;    
 
     const [h, setH] = useState({
-        name: "HackedIT",
-        organiser: "IIT-KGP",
+        name: "",
+        organiser: "",
         date: today,
-        members: 3,
-        about: "User friendly mailing app!",
-        repo: "https://github.com/Arghyadeep7",
-        deployed: "https://arghya-deep-pal.vercel.app",
-        cost: 250,
-        mustTech: [
-            {
-                id: "M1",
-                name: "C++",
-                rating: 80,
-            },
-            {
-                id: "M2",
-                name: "Python",
-                rating: 65,
-            },
-            {
-                id: "M3",
-                name: "Java",
-                rating: 70,
-            },
-        ],
-        prefTech: [
-            {
-                id: "P1",
-                name: "C",
-                rating: 80,
-            },
-            {
-                id: "P2",
-                name: "JavaScript",
-                rating: 70,
-            },
-        ],
-        clgPref: [
-            {
-                id: "C1",
-                name: "XYZ",
-            },
-        ],
-        links: [
-            {
-                id: "L1",
-                url: "https://arghya-deep-pal.vercel.app",
-            },
-        ],
+        members: "",
+        about: "",
+        repo: "",
+        deployed: "",
+        cost: "",
+        mustTech: [],
+        prefTech: [],
+        clgPref: [],
+        links: [],
     });
+    const [submitting, setSubmit] = useState(false);
 
     const singleChangeHandler = (event) => {
         const label = event.target.name;
@@ -93,17 +57,16 @@ const Hackathon = () => {
     };
 
     const arrayChangeHandler = (event) => {
-        const id = event.target.id;
-        const label = event.target.name;
+        const _id = event.target.id;
         const val = event.target.value;
+        const name = event.target.name;        
 
-        // console.log(id, label, val);
-
-        if (id[0] === "M") {
-            const arr = h.mustTech.map((obj) => {
-                if (obj.id === id) {
-                    if (label === "Name") {
-                        return { ...obj, id: "M" + val, name: val };
+        if (name === "Reqd") {
+            const arr = h.mustTech.map((obj) => {                
+                if (String(obj._id) === _id) {
+                    const type = /\d/.test(val)? "number": "string";
+                    if (type === "string") {
+                        return { ...obj, name: val };
                     }
 
                     return {
@@ -122,11 +85,12 @@ const Hackathon = () => {
             setH((e) => {
                 return { ...e, mustTech: arr };
             });
-        } else if (id[0] === "P") {
+        } else if (name === "Additional") {
             const arr = h.prefTech.map((obj) => {
-                if (obj.id === id) {
-                    if (label === "Name") {
-                        return { ...obj, id: "P" + val, name: val };
+                if (String(obj._id) === _id) {
+                    const type = /\d/.test(val)? "number": "string";
+                    if (type === "string") {
+                        return { ...obj, name: val };
                     }
 
                     return {
@@ -145,10 +109,10 @@ const Hackathon = () => {
             setH((e) => {
                 return { ...e, prefTech: arr };
             });
-        } else if (id[0] === "C") {
+        } else if (name === "Clg") {
             setH((e) => {
                 const arr = e.clgPref.map((obj) => {
-                    if (String(obj.id) === id) {
+                    if (String(obj._id) === _id) {
                         return { ...obj, name: val };
                     }
 
@@ -157,25 +121,26 @@ const Hackathon = () => {
 
                 return { ...e, clgPref: arr };
             });
-        }
-
-        setH((e) => {
-            const arr = e.links.map((obj) => {
-                if (String(obj.id) === id) {
-                    return { ...obj, url: val };
-                }
-
-                return obj;
+        }else {
+            setH((e) => {
+                const arr = e.links.map((obj) => {
+                    if (String(obj._id) === _id) {
+                        return { ...obj, url: val };
+                    }
+    
+                    return obj;
+                });
+    
+                return { ...e, links: arr };
             });
-
-            return { ...e, links: arr };
-        });
+        }        
     };
 
-    const addHandler = (event) => {
-        const id = event.target.id;
+    const addHandler = (name) => {        
 
-        if (id === "M") {
+        console.log(name);    
+
+        if (name === "Reqd") {
             let count = h.mustTech.length + 1;
             setH((e) => {
                 return {
@@ -183,14 +148,14 @@ const Hackathon = () => {
                     mustTech: [
                         ...e.mustTech,
                         {
-                            id: "M" + count,
+                            _id: count,
                             name: "C++",
                             rating: 0,
                         },
                     ],
                 };
             });
-        } else if (id === "P") {
+        } else if (name === "Additional") {
             let count = h.prefTech.length + 1;
             setH((e) => {
                 return {
@@ -198,14 +163,14 @@ const Hackathon = () => {
                     prefTech: [
                         ...e.prefTech,
                         {
-                            id: "P" + count,
+                            _id: count,
                             name: "C++",
                             rating: 0,
                         },
                     ],
                 };
             });
-        } else if (id === "C") {
+        } else if (name === "Clg") {
             let count = h.clgPref.length + 1;
             setH((e) => {
                 return {
@@ -213,39 +178,46 @@ const Hackathon = () => {
                     clgPref: [
                         ...e.clgPref,
                         {
-                            id: "C" + count,
+                            _id: count,
                             name: "",
                         },
                     ],
                 };
             });
+        } else if(name === "Link") {
+            let count = h.links.length + 1;
+            setH((e) => {
+                return {
+                    ...e,
+                    links: [
+                        ...e.links,
+                        {
+                            _id: count,
+                            url: "",
+                        },
+                    ],
+                };
+            });
         }
-
-        let count = h.links.length + 1;
-        setH((e) => {
-            return {
-                ...e,
-                links: [
-                    ...e.links,
-                    {
-                        id: "L" + count,
-                        url: "",
-                    },
-                ],
-            };
-        });
     };
 
     const deleteHandler = (event) => {
-        const id = event.target.id;
+
+        console.log("here");
+
+        const _id = event.target.id;
+        const name = event.target.name;
+
+        console.log(_id, "-", name);
+
         var count = 1;
-        if (id[0] === "M") {
+        if (name === "Reqd") {
             const arr = h.mustTech
-                .filter((tech) => tech.id !== id)
+                .filter((tech) => String(tech._id) !== _id)
                 .map((tech) => {
                     return {
                         ...tech,
-                        id: "M" + count++,
+                        _id: count++,
                     };
                 });
             setH((e) => {
@@ -254,13 +226,13 @@ const Hackathon = () => {
                     mustTech: arr,
                 };
             });
-        } else if (id[0] === "P") {
+        } else if (name === "Additional") {
             const arr = h.prefTech
-                .filter((tech) => tech.id !== id)
+                .filter((tech) => String(tech._id) !== _id)
                 .map((tech) => {
                     return {
                         ...tech,
-                        id: "P" + count++,
+                        _id: count++,
                     };
                 });
             setH((e) => {
@@ -269,13 +241,13 @@ const Hackathon = () => {
                     prefTech: arr,
                 };
             });
-        } else if (id[0] === "C") {
+        } else if (name === "Clg") {
             const arr = h.clgPref
-                .filter((clg) => clg.id !== id)
+                .filter((clg) => String(clg._id) !== _id)
                 .map((clg) => {
                     return {
                         ...clg,
-                        id: "C" + count++,
+                        _id: count++,
                     };
                 });
             setH((e) => {
@@ -284,26 +256,79 @@ const Hackathon = () => {
                     clgPref: arr,
                 };
             });
-        }
-
-        const arr = h.links
-            .filter((link) => link.id !== id)
-            .map((link) => {
+        }else{
+            const arr = h.links
+                .filter((link) => String(link._id) !== _id)
+                .map((link) => {
+                    return {
+                        ...link,
+                        _id: count++,
+                    };
+                });
+            setH((e) => {
                 return {
-                    ...link,
-                    id: "L" + count++,
+                    ...e,
+                    links: arr,
                 };
             });
-        setH((e) => {
-            return {
-                ...e,
-                links: arr,
-            };
-        });
+        }
     };
 
-    const submitHandler = (event) => {
+    const submitHandler = async (event) => {
         event.preventDefault();
+        console.log(h);
+
+        setSubmit(true);
+
+        const res = await fetch(
+            process.env.REACT_APP_FETCH_URL + "/account/" + _id,
+            {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            }
+        ).then((re) => re.json());
+
+        console.log(res, "here");
+
+        const name = res.user.fname + (res.user.lname? " " + res.user.lname: "");
+
+        const obj = {
+            ...h,
+            owner: name,
+            ownerId: _id,
+            members: [
+                {
+                    _id,
+                    fname: res.user.fname,
+                    lname: res.user.lname,
+                    email: res.user.email,
+                    college: res.user.college
+                }
+            ], 
+        };
+
+        const response = await fetch(
+            process.env.REACT_APP_FETCH_URL + "/hackathons/" + _id,
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(obj)
+            }
+        ).then((res) => res.json());
+
+        console.log(response);
+
+        setSubmit(false);
+
+        if(response.code === 200){
+            alert("Hackathon successfully created");
+        }else{
+            alert("Internal Error occurred. Try again later.");
+        }
     };
 
     return (
@@ -318,7 +343,7 @@ const Hackathon = () => {
                 }}
             >
                 <h4>Create a Hackathon Project</h4>
-                <Button variant="outline-primary" size="sm" type="submit">
+                <Button variant="outline-primary" size="sm" type="submit" disabled={submitting}>
                     Create <BiSave size={20} />
                 </Button>
             </div>
@@ -334,6 +359,7 @@ const Hackathon = () => {
                             style={{ fontWeight: "bold" }}
                             className="mt-3"
                             onChange={singleChangeHandler}
+                            disabled={submitting}
                         />
                     </FloatingLabel>
                 </Col>
@@ -347,6 +373,7 @@ const Hackathon = () => {
                             style={{ fontWeight: "bold" }}
                             className="mt-3"
                             onChange={singleChangeHandler}
+                            disabled={submitting}
                         />
                     </FloatingLabel>
                 </Col>
@@ -364,6 +391,7 @@ const Hackathon = () => {
                             }}
                             className="mt-3"
                             onChange={singleChangeHandler}
+                            disabled={submitting}
                         />
                     </FloatingLabel>
                     <FloatingLabel type="text" label="Reqd. Members">
@@ -375,6 +403,7 @@ const Hackathon = () => {
                             style={{ fontWeight: "bold" }}
                             className="mt-3"
                             onChange={singleChangeHandler}
+                            disabled={submitting}
                         />
                     </FloatingLabel>
                     <FloatingLabel label="Cost/Member (Rs.)">
@@ -389,6 +418,7 @@ const Hackathon = () => {
                             }}
                             className="mt-3"
                             onChange={singleChangeHandler}
+                            disabled={submitting}
                         />
                     </FloatingLabel>
                 </Col>
@@ -399,16 +429,16 @@ const Hackathon = () => {
                             as="textarea"
                             name="About"
                             value={h.about}
-                            style={{ fontWeight: "bold", minHeight: "207px" }}
+                            style={{ fontWeight: "bold", minHeight: "207px", resize: "none" }}
                             className="mt-3"
                             onChange={singleChangeHandler}
+                            disabled={submitting}
                         />
                     </FloatingLabel>
                 </Col>
                 <Col sm={6}>
-                    <FloatingLabel label="Repository Link">
-                        <Form.Control
-                            required
+                    <FloatingLabel label="Repository Link (if applicable)">
+                        <Form.Control                            
                             type="text"
                             name="Repo"
                             value={h.repo}
@@ -419,13 +449,13 @@ const Hackathon = () => {
                             }}
                             className="mt-3"
                             onChange={singleChangeHandler}
+                            disabled={submitting}
                         />
                     </FloatingLabel>
                 </Col>
                 <Col sm={6}>
-                    <FloatingLabel label="Deployment Link">
-                        <Form.Control
-                            required
+                    <FloatingLabel label="Deployment Link (if applicable)">
+                        <Form.Control                            
                             type="text"
                             name="Deployed"
                             value={h.deployed}
@@ -436,17 +466,18 @@ const Hackathon = () => {
                             }}
                             className="mt-3"
                             onChange={singleChangeHandler}
+                            disabled={submitting}
                         />
                     </FloatingLabel>
                 </Col>
 
                 <div className="d-flex justify-content-between mt-4">
                     <h5 className="mt-1">Required Skills</h5>
-                    <Button
-                        id="M"
+                    <Button                        
                         variant="outline-dark"
-                        size="sm"
-                        onClick={addHandler}
+                        size="sm"                        
+                        onClick={() => addHandler("Reqd")}
+                        disabled={submitting}
                     >
                         Add <FaPlus size={20} />
                     </Button>
@@ -454,23 +485,25 @@ const Hackathon = () => {
                 {h.mustTech.length === 0 && (
                     <h6 className="mt-4">No mandatory skills required</h6>
                 )}
-                {h.mustTech.map((tech) => (
-                    <>
+                {h.mustTech.length > 0 && h.mustTech.map((tech) => (
+                    <Fragment key={tech._id}>
                         <Col xs={6} md={4} lg={2}>
                             <FloatingLabel
-                                label={`Technology-${tech.id.substring(1)}`}
+                                label={`Technology-${tech._id}`}
                             >
                                 <Form.Select
                                     required
-                                    id={tech.id}
+                                    id={tech._id}
                                     type="text"
-                                    name="Name"
+                                    name="Reqd"
+                                    label="Name"
                                     value={tech.name}
                                     style={{
                                         fontWeight: "bold",
                                     }}
                                     className="mt-3"
                                     onChange={arrayChangeHandler}
+                                    disabled={submitting}
                                 >
                                     {technologies.map((option) => (
                                         <option value={option} key={option}>
@@ -483,39 +516,43 @@ const Hackathon = () => {
                         <Col xs={6} md={2} lg={2}>
                             <FloatingLabel label="Rating">
                                 <Form.Control
-                                    id={tech.id}
+                                    id={tech._id}
                                     required
                                     type="number"
-                                    name="Rating"
+                                    name="Reqd"
+                                    label="Rating"
                                     value={tech.rating}
                                     style={{
                                         fontWeight: "bold",
                                     }}
                                     className="mt-3 pe-0"
                                     onChange={arrayChangeHandler}
+                                    disabled={submitting}
                                 />
                             </FloatingLabel>
-                            <div className="d-flex justify-content-end mt-2 mb-1">
+                            <div className="d-flex justify-content-end mt-2 mb-1" id={tech._id}>
                                 <Button
                                     variant="danger"
                                     onClick={deleteHandler}
-                                    id={tech.id}
+                                    id={tech._id}
+                                    name="Reqd"
                                     size="sm"
+                                    disabled={submitting}
                                 >
                                     Delete <MdOutlineDelete size={20} />
                                 </Button>
                             </div>
                         </Col>
-                    </>
+                    </Fragment>
                 ))}
 
                 <div className="d-flex justify-content-between mt-4">
                     <h5 className="mt-1">Additional Skills</h5>
-                    <Button
-                        id="P"
+                    <Button                        
                         variant="outline-dark"
                         size="sm"
-                        onClick={addHandler}
+                        onClick={() => addHandler("Additional")}
+                        disabled={submitting}
                     >
                         Add <FaPlus size={20} />
                     </Button>
@@ -523,23 +560,25 @@ const Hackathon = () => {
                 {h.prefTech.length === 0 && (
                     <h6 className="mt-4">No additional skills required</h6>
                 )}
-                {h.prefTech.map((tech) => (
-                    <>
+                {h.prefTech.length > 0 && h.prefTech.map((tech) => (
+                    <Fragment key={tech._id}>
                         <Col xs={6} md={4} lg={2}>
                             <FloatingLabel
-                                label={`Technology-${tech.id.substring(1)}`}
+                                label={`Technology-${tech._id}`}
                             >
                                 <Form.Select
                                     required
-                                    id={tech.id}
+                                    id={tech._id}
                                     type="text"
-                                    name="Name"
+                                    name="Additional"
+                                    label="Name"
                                     value={tech.name}
                                     style={{
                                         fontWeight: "bold",
                                     }}
                                     className="mt-3"
                                     onChange={arrayChangeHandler}
+                                    disabled={submitting}
                                 >
                                     {technologies.map((option) => (
                                         <option value={option} key={option}>
@@ -552,39 +591,43 @@ const Hackathon = () => {
                         <Col xs={6} md={2} lg={2}>
                             <FloatingLabel label="Rating">
                                 <Form.Control
-                                    id={tech.id}
+                                    id={tech._id}
                                     required
                                     type="number"
-                                    name="Rating"
+                                    name="Additional"                                    
+                                    label="Rating"
                                     value={tech.rating}
                                     style={{
                                         fontWeight: "bold",
                                     }}
                                     className="mt-3 pe-0"
                                     onChange={arrayChangeHandler}
+                                    disabled={submitting}
                                 />
                             </FloatingLabel>
-                            <div className="d-flex justify-content-end mt-2 mb-1">
+                            <div className="d-flex justify-content-end mt-2 mb-1" id={tech._id}>
                                 <Button
                                     variant="danger"
-                                    onClick={deleteHandler}
-                                    id={tech.id}
+                                    id={tech._id}
+                                    onClick={deleteHandler}                                    
                                     size="sm"
+                                    name="Additional"
+                                    disabled={submitting}
                                 >
                                     Delete <MdOutlineDelete size={20} />
                                 </Button>
                             </div>
                         </Col>
-                    </>
+                    </Fragment>
                 ))}
 
                 <div className="d-flex justify-content-between mt-4">
                     <h5 className="mt-1">College Preference</h5>
-                    <Button
-                        id="C"
+                    <Button                        
                         variant="outline-dark"
                         size="sm"
-                        onClick={addHandler}
+                        onClick={() => addHandler("Clg")}
+                        disabled={submitting}
                     >
                         Add <FaPlus size={20} />
                     </Button>
@@ -592,28 +635,32 @@ const Hackathon = () => {
                 {h.clgPref.length === 0 && (
                     <h6 className="mt-4">No college preference</h6>
                 )}
-                {h.clgPref.map((clg) => (
-                    <Col sm={6} md={4} lg={3} xl={2} key={clg.id.substring(1)}>
-                        <FloatingLabel label={`College-${clg.id.substring(1)}`}>
+                {h.clgPref.length > 0 && h.clgPref.map((clg) => (
+                    <Col sm={6} md={4} lg={3} xl={2} key={clg._id}>
+                        <FloatingLabel label={`College-${clg._id}`}>
                             <Form.Control
                                 required
-                                id={clg.id}
+                                id={clg._id}
                                 type="text"
-                                name="Clg pref"
+                                name="Clg"
+                                label="Clg Pref"
                                 value={clg.name}
                                 style={{
                                     fontWeight: "bold",
                                 }}
                                 className="mt-3"
                                 onChange={arrayChangeHandler}
+                                disabled={submitting}
                             />
                         </FloatingLabel>
-                        <div className="d-flex justify-content-end mt-2 mb-1">
+                        <div className="d-flex justify-content-end mt-2 mb-1" id={clg._id}>
                             <Button
                                 variant="danger"
                                 onClick={deleteHandler}
-                                id={clg.id}
+                                id={clg._id}
                                 size="sm"
+                                name="Clg"
+                                disabled={submitting}
                             >
                                 Delete <MdOutlineDelete size={20} />
                             </Button>
@@ -623,11 +670,11 @@ const Hackathon = () => {
 
                 <div className="d-flex justify-content-between mt-4">
                     <h5 className="mt-1">Reference Links</h5>
-                    <Button
-                        id="L"
+                    <Button                        
                         variant="outline-dark"
                         size="sm"
-                        onClick={addHandler}
+                        onClick={() => addHandler("Link")}
+                        disabled={submitting}
                     >
                         Add <FaPlus size={20} />
                     </Button>
@@ -636,27 +683,30 @@ const Hackathon = () => {
                     <h6 className="mt-4">No reference links provided</h6>
                 )}
                 {h.links.map((link) => (
-                    <Col sm={6} md={4} key={link.id}>
-                        <FloatingLabel label={`Link-${link.id.substring(1)}`}>
+                    <Col sm={6} md={4} key={link._id}>
+                        <FloatingLabel label={`Link-${link._id}`}>
                             <Form.Control
                                 required
-                                id={link.id}
+                                id={link._id}
                                 type="text"
-                                name="Link"
+                                name="Link"                                
                                 value={link.url}
                                 style={{
                                     fontWeight: "bold",
                                 }}
                                 className="mt-3"
                                 onChange={arrayChangeHandler}
+                                disabled={submitting}
                             />
                         </FloatingLabel>
-                        <div className="d-flex justify-content-end mt-2 mb-1">
+                        <div className="d-flex justify-content-end mt-2 mb-1" id={link._id}>
                             <Button
                                 variant="danger"
                                 onClick={deleteHandler}
-                                id={link.id}
+                                id={link._id}
                                 size="sm"
+                                name="Link"
+                                disabled={submitting}
                             >
                                 Delete <MdOutlineDelete size={20} />
                             </Button>

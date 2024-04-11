@@ -5,29 +5,31 @@ import { Form, Row, Col, Button, FloatingLabel } from "react-bootstrap";
 import { FaPlus } from "react-icons/fa6";
 import { BiSave } from "react-icons/bi";
 import { MdOutlineDelete } from "react-icons/md";
+import { ImBlocked } from "react-icons/im";
 
 const Experience = ({ url_id }) => {
-    const [w, setW] = useState({});
+    const [w, setW] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [saving, setSave] = useState(false);
 
     useEffect(() => {
-      const request = async () => {
-        const response = await fetch(
-            process.env.REACT_APP_FETCH_URL + "/experiences/" + url_id,
-            {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            }
-        ).then((res) => res.json());
+        const request = async () => {
+            const response = await fetch(
+                process.env.REACT_APP_FETCH_URL + "/experiences/" + url_id,
+                {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                }
+            ).then((res) => res.json());
 
-        console.log(response);
+            //console.log(response);
 
-        setW(response.arr);
-      };
-      request();
-      setLoading(false);
+            setW(response.arr);
+        };
+        request();
+        setLoading(false);
     }, [url_id]);
 
     const date = new Date();
@@ -105,7 +107,29 @@ const Experience = ({ url_id }) => {
 
     const submitHandler = (event) => {
         event.preventDefault();
-        console.log(w);
+
+        setSave(true);
+        const request = async () => {
+            const response = await fetch(
+                process.env.REACT_APP_FETCH_URL + "/experiences/" + url_id,
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(w),
+                }
+            ).then((res) => res.json());
+
+            if (response.code === 500) {
+                alert("Some Error has occurred. Please try again later.");
+            } else {
+                alert("Details Saved");
+            }
+        };
+
+        request();
+        setSave(false);
     };
 
     return (
@@ -126,11 +150,25 @@ const Experience = ({ url_id }) => {
                         size="sm"
                         className="me-2"
                         onClick={addhandler}
+                        disabled={saving || loading}
                     >
                         Add <FaPlus size={20} />
                     </Button>
-                    <Button variant="outline-primary" size="sm" type="submit">
-                        Save <BiSave size={20} />
+                    <Button
+                        variant="outline-primary"
+                        size="sm"
+                        type="submit"
+                        disabled={saving || loading}
+                    >
+                        {saving ? (
+                            <>
+                                Saving <ImBlocked size={20} />
+                            </>
+                        ) : (
+                            <>
+                                Save <BiSave size={20} />
+                            </>
+                        )}
                     </Button>
                 </div>
             </div>
@@ -155,6 +193,7 @@ const Experience = ({ url_id }) => {
                                             className="mt-3"
                                             onChange={changeHandler}
                                             required
+                                            disabled={saving || loading}
                                         />
                                     </FloatingLabel>
                                 </Col>
@@ -169,6 +208,7 @@ const Experience = ({ url_id }) => {
                                             className="mt-3"
                                             onChange={changeHandler}
                                             required
+                                            disabled={saving || loading}
                                         />
                                     </FloatingLabel>
                                 </Col>
@@ -184,6 +224,7 @@ const Experience = ({ url_id }) => {
                                             onChange={changeHandler}
                                             max={dt}
                                             required
+                                            disabled={saving || loading}
                                         />
                                     </FloatingLabel>
                                 </Col>
@@ -203,6 +244,7 @@ const Experience = ({ url_id }) => {
                                             onChange={changeHandler}
                                             max={dt}
                                             required
+                                            disabled={saving || loading}
                                         />
                                     </FloatingLabel>
                                 </Col>
@@ -216,12 +258,14 @@ const Experience = ({ url_id }) => {
                                         checked={
                                             exp.to === "Present" ? true : false
                                         }
+                                        disabled={saving || loading}
                                     />
                                     <Button
                                         variant="danger"
                                         onClick={deleteHandler}
                                         id={exp._id}
                                         size="sm"
+                                        disabled={saving || loading}
                                     >
                                         Delete <MdOutlineDelete size={20} />
                                     </Button>

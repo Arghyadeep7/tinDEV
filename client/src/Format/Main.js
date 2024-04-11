@@ -289,6 +289,76 @@ export const technologies = [
     "Zig",
 ];
 
+export const options = [
+    "High School",
+    "B. Tech.",
+    "M. Tech.",
+    "B. Eng.",
+    "M. Eng.",
+    "B. B. A.",
+    "M. B. A.",
+    "B. Sc.",
+    "M. Sc.",
+    "B. Com.",
+    "M. Com.",
+    "B. C. A.",
+    "M. C. A.",
+    "B. A.",
+    "B. Ed.",
+    "PhD",
+    "Others",
+];
+
+export const tabs = [
+    {
+        label: "Personal",
+        choice: 1,
+    },
+    {
+        label: "Education",
+        choice: 2,
+    },
+    {
+        label: "Experience",
+        choice: 3,
+    },
+    {
+        label: "Projects",
+        choice: 4,
+    },
+    {
+        label: "Skills",
+        choice: 5,
+    },
+    {
+        label: "Certificates",
+        choice: 6,
+    },
+    {
+        label: "Links",
+        choice: 7,
+    },
+];
+
+export const scope = [
+    {
+        id: 1,
+        label: "Hackathon",
+    },
+    {
+        id: 2,
+        label: "Personal",
+    },
+    {
+        id: 3,
+        label: "Open Source",
+    },
+    {
+        id: 4,
+        label: "Startup",
+    },
+];
+
 export const signin = [
     {
         label: "Email Address*",
@@ -369,24 +439,7 @@ export const signup = [
         label: "Course*",
         type: "select",
         default: "Select Course",
-        options: [
-            "B. Tech.",
-            "M. Tech.",
-            "B. Eng.",
-            "M. Eng.",
-            "B. B. A.",
-            "M. B. A.",
-            "B. Sc.",
-            "M. Sc.",
-            "B. Com.",
-            "M. Com.",
-            "B. C. A.",
-            "M. C. A.",
-            "B. A.",
-            "B. Ed.",
-            "PhD",
-            "Others",
-        ],
+        options: options,
         required: true,
     },
     {
@@ -548,36 +601,5 @@ export const account = [
         required: true,
         options: ["Pursuing", "Completed"],
         field: "status",
-    },
-];
-
-export const tabs = [
-    {
-        label: "Personal",
-        choice: 1,
-    },
-    {
-        label: "Education",
-        choice: 2,
-    },
-    {
-        label: "Experience",
-        choice: 3,
-    },
-    {
-        label: "Projects",
-        choice: 4,
-    },
-    {
-        label: "Skills",
-        choice: 5,
-    },
-    {
-        label: "Certificates",
-        choice: 6,
-    },
-    {
-        label: "Links",
-        choice: 7,
     },
 ];

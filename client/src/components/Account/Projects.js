@@ -5,10 +5,12 @@ import { Form, Row, Col, Button, FloatingLabel } from "react-bootstrap";
 import { FaPlus } from "react-icons/fa6";
 import { BiSave } from "react-icons/bi";
 import { MdOutlineDelete } from "react-icons/md";
+import { ImBlocked } from "react-icons/im";
 
 const Projects = ({ url_id }) => {
-    const [p, setP] = useState({});
+    const [p, setP] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [saving, setSave] = useState(false);
 
     useEffect(() => {
         const request = async () => {
@@ -22,7 +24,7 @@ const Projects = ({ url_id }) => {
                 }
             ).then((res) => res.json());
 
-            console.log(response);
+            //console.log(response);
 
             setP(response.arr);
         };
@@ -88,7 +90,29 @@ const Projects = ({ url_id }) => {
 
     const submitHandler = (event) => {
         event.preventDefault();
-        console.log(p);
+
+        setSave(true);
+        const request = async () => {
+            const response = await fetch(
+                process.env.REACT_APP_FETCH_URL + "/projects/" + url_id,
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(p),
+                }
+            ).then((res) => res.json());
+
+            if (response.code === 500) {
+                alert("Some Error has occurred. Please try again later.");
+            } else {
+                alert("Details Saved");
+            }
+        };
+
+        request();
+        setSave(false);
     };
 
     return (
@@ -109,112 +133,144 @@ const Projects = ({ url_id }) => {
                         size="sm"
                         className="me-2"
                         onClick={addhandler}
+                        disabled={saving || loading}
                     >
                         Add <FaPlus size={20} />
                     </Button>
-                    <Button variant="outline-primary" size="sm" type="submit">
-                        Save <BiSave size={20} />
+                    <Button
+                        variant="outline-primary"
+                        size="sm"
+                        type="submit"
+                        disabled={saving || loading}
+                    >
+                        {saving ? (
+                            <>
+                                Saving <ImBlocked size={20} />
+                            </>
+                        ) : (
+                            <>
+                                Save <BiSave size={20} />
+                            </>
+                        )}
                     </Button>
                 </div>
             </div>
-            {
-              loading? <h5>Loading...</h5>
-              :
-              <>            
-                {p.length === 0 && <h5 className="mt-4">No Project entered.</h5>}
-                {p.length > 0 &&
-                    p.map((proj) => (
-                        <Row key={proj._id}>
-                            <Col sm={5} lg={4}>
-                                <FloatingLabel type="text" label="Name">
-                                    <Form.Control
-                                        id={proj._id}
+            {loading ? (
+                <h5>Loading...</h5>
+            ) : (
+                <>
+                    {p.length === 0 && (
+                        <h5 className="mt-4">No Project entered.</h5>
+                    )}
+                    {p.length > 0 &&
+                        p.map((proj) => (
+                            <Row key={proj._id}>
+                                <Col sm={5} lg={4}>
+                                    <FloatingLabel type="text" label="Name">
+                                        <Form.Control
+                                            id={proj._id}
+                                            type="text"
+                                            name="Name"
+                                            value={proj.name}
+                                            style={{ fontWeight: "bold" }}
+                                            className="mt-3"
+                                            onChange={changeHandler}
+                                            required
+                                            disabled={saving || loading}
+                                        />
+                                    </FloatingLabel>
+                                    <FloatingLabel
                                         type="text"
-                                        name="Name"
-                                        value={proj.name}
-                                        style={{ fontWeight: "bold" }}
-                                        className="mt-3"
-                                        onChange={changeHandler}
-                                        required
-                                    />
-                                </FloatingLabel>
-                                <FloatingLabel type="text" label="Repository Link">
-                                    <Form.Control
-                                        id={proj._id}
+                                        label="Repository Link"
+                                    >
+                                        <Form.Control
+                                            id={proj._id}
+                                            type="text"
+                                            name="Repository"
+                                            value={proj.repo}
+                                            style={{
+                                                fontWeight: "bold",
+                                                color: "blue",
+                                                textDecoration: "underline",
+                                            }}
+                                            className="mt-3"
+                                            onChange={changeHandler}
+                                            disabled={saving || loading}
+                                        />
+                                    </FloatingLabel>
+                                    <FloatingLabel
                                         type="text"
-                                        name="Repository"
-                                        value={proj.repo}
-                                        style={{
-                                            fontWeight: "bold",
-                                            color: "blue",
-                                            textDecoration: "underline",
-                                        }}
-                                        className="mt-3"
-                                        onChange={changeHandler}
-                                    />
-                                </FloatingLabel>
-                                <FloatingLabel type="text" label="Deployed Link">
-                                    <Form.Control
-                                        id={proj._id}
+                                        label="Deployed Link"
+                                    >
+                                        <Form.Control
+                                            id={proj._id}
+                                            type="text"
+                                            name="Deployed"
+                                            value={proj.deployed}
+                                            style={{
+                                                fontWeight: "bold",
+                                                color: "blue",
+                                                textDecoration: "underline",
+                                            }}
+                                            className="mt-3"
+                                            onChange={changeHandler}
+                                            disabled={saving || loading}
+                                        />
+                                    </FloatingLabel>
+                                </Col>
+                                <Col sm={7} lg={8}>
+                                    <FloatingLabel
+                                        type="textarea"
+                                        label="About"
+                                    >
+                                        <Form.Control
+                                            id={proj._id}
+                                            as="textarea"
+                                            name="About"
+                                            value={proj.about}
+                                            style={{
+                                                fontWeight: "bold",
+                                                minHeight: "132px",
+                                                resize: "none"
+                                            }}
+                                            className="mt-3"
+                                            onChange={changeHandler}
+                                            disabled={saving || loading}
+                                            required
+                                        />
+                                    </FloatingLabel>
+                                    <FloatingLabel
                                         type="text"
-                                        name="Deployed"
-                                        value={proj.deployed}
-                                        style={{
-                                            fontWeight: "bold",
-                                            color: "blue",
-                                            textDecoration: "underline",
-                                        }}
-                                        className="mt-3"
-                                        onChange={changeHandler}
-                                    />
-                                </FloatingLabel>
-                            </Col>
-                            <Col sm={7} lg={8}>
-                                <FloatingLabel type="textarea" label="About">
-                                    <Form.Control
+                                        label="Technologies Used"
+                                    >
+                                        <Form.Control
+                                            id={proj._id}
+                                            type="text"
+                                            name="Technologies"
+                                            value={proj.tech}
+                                            style={{ fontWeight: "bold" }}
+                                            className="mt-3"
+                                            onChange={changeHandler}
+                                            disabled={saving || loading}
+                                            required
+                                        />
+                                    </FloatingLabel>
+                                </Col>
+                                <div className="d-flex justify-content-end mt-2 mb-1">
+                                    <Button
+                                        variant="danger"
+                                        onClick={deleteHandler}
                                         id={proj._id}
-                                        as="textarea"
-                                        name="About"
-                                        value={proj.about}
-                                        style={{
-                                            fontWeight: "bold",
-                                            minHeight: "132px",
-                                        }}
-                                        className="mt-3"
-                                        onChange={changeHandler}
-                                        required
-                                    />
-                                </FloatingLabel>
-                                <FloatingLabel
-                                    type="text"
-                                    label="Technologies Used"
-                                >
-                                    <Form.Control
-                                        id={proj._id}
-                                        type="text"
-                                        name="Technologies"
-                                        value={proj.tech}
-                                        style={{ fontWeight: "bold" }}
-                                        className="mt-3"
-                                        onChange={changeHandler}
-                                        required
-                                    />
-                                </FloatingLabel>
-                            </Col>
-                            <div className="d-flex justify-content-end mt-2 mb-1">
-                                <Button
-                                    variant="danger"
-                                    onClick={deleteHandler}
-                                    id={proj._id}
-                                    size="sm"
-                                >
-                                    Delete <MdOutlineDelete size={20} />
-                                </Button>
-                            </div>
-                        </Row>
-                ))}
-              </>
-            }
+                                        size="sm"
+                                        disabled={saving || loading}
+                                    >
+                                        Delete <MdOutlineDelete size={20} />
+                                    </Button>
+                                </div>
+                            </Row>
+                        ))}
+                </>
+            )}
         </Form>
     );
 };
