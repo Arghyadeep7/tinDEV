@@ -12,7 +12,7 @@ router.get("/:_id", async (req, res, next) => {
 
     console.log(ownerId, "here");
 
-    await Hackathon.collection.find({ ownerId }, (err, result) => {
+    await Hackathon.collection.find({ ownerId: ownerId }, (err, result) => {
       if (err) {
         return res.json({
           code: 500,
@@ -39,9 +39,9 @@ router.get("/:_id", async (req, res, next) => {
   }
 });
 
-router.get("/hack/:_id", async (req, res, next) => {
+router.get("/hackPage/:_id", async (req, res, next) => {
   try {
-    const _id = req.params._id;
+    const _id = new ObjectId(req.params._id);    
 
     await Hackathon.collection.findOne({ _id }, (err, result) => {
       if (err) {
@@ -55,6 +55,38 @@ router.get("/hack/:_id", async (req, res, next) => {
           code: 200,
           success: true,
           message: "HACKATHON FOUND",
+          arr: result,
+        });
+      }
+    });
+  } catch (err) {
+    return res.json({
+      code: 500,
+      success: false,
+      message: "ERROR OCCURRED-" + err.message,
+    });
+  }
+});
+
+router.post("/hackPage/:_id", async (req, res, next) => {
+  try {
+    const _id = new ObjectId(req.params._id);
+    const data = req.body;
+
+    delete data._id;    
+
+    await Hackathon.collection.replaceOne({ _id }, data, (err, result) => {
+      if (err) {
+        return res.json({
+          code: 500,
+          success: false,
+          message: "ERROR OCCURRED-" + err.message,
+        });
+      } else {
+        return res.json({
+          code: 200,
+          success: true,
+          message: "HACKATHON UPDATED",
           ...result,
         });
       }

@@ -11,6 +11,7 @@ import Interests from "./components/Interests/AAA";
 import Collabs from "./components/Collabs/AAA";
 import New from "./components/New/AAA";
 import Account from "./components/Account/AAA";
+import Connect from "./components/Connect/AAA";
 import HackPage from "./Pages/HackPage";
 
 import { Container } from "react-bootstrap";
@@ -95,6 +96,16 @@ const App = () => {
                     }
                 />
                 <Route
+                    path="/connect/:url_id"
+                    element={
+                        loggedIn ? (
+                            <Connect _id={_id} />
+                        ) : (
+                            <Navigate to="/signin" />
+                        )
+                    }
+                />
+                <Route
                     path="/"
                     element={loggedIn ? <Navigate to={"/account/" + _id} /> : <Navigate to="/signin" />}
                 />
@@ -109,7 +120,7 @@ const App = () => {
                     element={loggedIn ? <Collabs _id={_id}/> : <Navigate to="/signin" />}
                 />
                 <Route
-                    path="/hackathon/:_id"
+                    path="/hackathon/:url_id"
                     element={
                         loggedIn ? <HackPage /> : <Navigate to="/signin" />
                     }

@@ -1,16 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, Fragment } from "react";
 
-import { Form, Row, Col, Button, FloatingLabel } from "react-bootstrap";
-
-import { FaPlus } from "react-icons/fa6";
-import { BiSave } from "react-icons/bi";
-import { MdOutlineDelete } from "react-icons/md";
-import { ImBlocked } from "react-icons/im";
+import { Form, Row, Col, FloatingLabel } from "react-bootstrap";
 
 const Projects = ({ url_id }) => {
     const [p, setP] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [saving, setSave] = useState(false);
 
     useEffect(() => {
         const request = async () => {
@@ -32,128 +26,18 @@ const Projects = ({ url_id }) => {
         setLoading(false);
     }, [url_id]);
 
-    const changeHandler = (event) => {
-        const _id = event.target.id;
-        const label = event.target.name;
-        const val = event.target.value;
-
-        setP((e) => {
-            return e.map((obj) => {
-                if (String(obj._id) === _id) {
-                    if (label === "Name") {
-                        return { ...obj, name: val };
-                    } else if (label === "About") {
-                        return { ...obj, about: val };
-                    } else if (label === "Repository") {
-                        return { ...obj, repo: val.trim() };
-                    } else if (label === "Deployed") {
-                        return { ...obj, deployed: val.trim() };
-                    }
-
-                    return { ...obj, tech: val };
-                }
-
-                return obj;
-            });
-        });
-    };
-
-    const addhandler = () => {
-        const count = p.length + 1;
-        setP((e) => [
-            ...e,
-            {
-                _id: count,
-                name: "",
-                about: "",
-                repo: "",
-                deployed: "",
-                tech: "",
-            },
-        ]);
-    };
-
-    const deleteHandler = (event) => {
-        const _id = event.target.id;
-        var count = 1;
-        const arr = p
-            .filter((proj) => String(proj._id) !== _id)
-            .map((proj) => {
-                return {
-                    ...proj,
-                    _id: count++,
-                };
-            });
-
-        setP(arr);
-    };
-
-    const submitHandler = (event) => {
-        event.preventDefault();
-
-        setSave(true);
-        const request = async () => {
-            const response = await fetch(
-                process.env.REACT_APP_FETCH_URL + "/projects/" + url_id,
-                {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify(p),
-                }
-            ).then((res) => res.json());
-
-            if (response.code === 500) {
-                alert("Some Error has occurred. Please try again later.");
-            } else {
-                alert("Details Saved");
-            }
-        };
-
-        request();
-        setSave(false);
-    };
-
     return (
-        <Form onSubmit={submitHandler} style={{ position: "relative" }}>
+        <Fragment style={{ position: "relative" }}>
             <div
-                className="d-flex justify-content-between pb-2"
                 style={{
                     position: "sticky",
                     top: "0",
                     zIndex: 1000,
                     backgroundColor: "white",
                 }}
+                className="mb-3"
             >
                 <h4>Projects</h4>
-                <div>
-                    <Button
-                        variant="outline-dark"
-                        size="sm"
-                        className="me-2"
-                        onClick={addhandler}
-                        disabled={saving || loading}
-                    >
-                        Add <FaPlus size={20} />
-                    </Button>
-                    <Button
-                        variant="outline-primary"
-                        size="sm"
-                        type="submit"
-                        disabled={saving || loading}
-                    >
-                        {saving ? (
-                            <>
-                                Saving <ImBlocked size={20} />
-                            </>
-                        ) : (
-                            <>
-                                Save <BiSave size={20} />
-                            </>
-                        )}
-                    </Button>
-                </div>
             </div>
             {loading ? (
                 <h5>Loading...</h5>
@@ -163,7 +47,7 @@ const Projects = ({ url_id }) => {
                         <h5 className="mt-4">No Project entered.</h5>
                     )}
                     {p.length > 0 &&
-                        p.map((proj) => (                            
+                        p.map((proj) => (
                             <Row key={proj._id}>
                                 <b>Project - {proj._id}</b>
                                 <Col sm={5} lg={4}>
@@ -175,9 +59,7 @@ const Projects = ({ url_id }) => {
                                             value={proj.name}
                                             style={{ fontWeight: "bold" }}
                                             className="mt-3"
-                                            onChange={changeHandler}
-                                            required
-                                            disabled={saving || loading}
+                                            readOnly
                                         />
                                     </FloatingLabel>
                                     <FloatingLabel
@@ -195,8 +77,7 @@ const Projects = ({ url_id }) => {
                                                 textDecoration: "underline",
                                             }}
                                             className="mt-3"
-                                            onChange={changeHandler}
-                                            disabled={saving || loading}
+                                            readOnly
                                         />
                                     </FloatingLabel>
                                     <FloatingLabel
@@ -214,8 +95,7 @@ const Projects = ({ url_id }) => {
                                                 textDecoration: "underline",
                                             }}
                                             className="mt-3"
-                                            onChange={changeHandler}
-                                            disabled={saving || loading}
+                                            readOnly
                                         />
                                     </FloatingLabel>
                                 </Col>
@@ -232,12 +112,10 @@ const Projects = ({ url_id }) => {
                                             style={{
                                                 fontWeight: "bold",
                                                 minHeight: "132px",
-                                                resize: "none"
+                                                resize: "none",
                                             }}
                                             className="mt-3"
-                                            onChange={changeHandler}
-                                            disabled={saving || loading}
-                                            required
+                                            readOnly
                                         />
                                     </FloatingLabel>
                                     <FloatingLabel
@@ -251,28 +129,15 @@ const Projects = ({ url_id }) => {
                                             value={proj.tech}
                                             style={{ fontWeight: "bold" }}
                                             className="mt-3"
-                                            onChange={changeHandler}
-                                            disabled={saving || loading}
-                                            required
+                                            readOnly
                                         />
                                     </FloatingLabel>
-                                </Col>
-                                <div className="d-flex justify-content-end mt-2 mb-1">
-                                    <Button
-                                        variant="danger"
-                                        onClick={deleteHandler}
-                                        id={proj._id}
-                                        size="sm"
-                                        disabled={saving || loading}
-                                    >
-                                        Delete <MdOutlineDelete size={20} />
-                                    </Button>
-                                </div>
+                                </Col>                                
                             </Row>
                         ))}
                 </>
             )}
-        </Form>
+        </Fragment>
     );
 };
 

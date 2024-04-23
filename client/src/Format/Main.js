@@ -603,3 +603,22 @@ export const account = [
         field: "status",
     },
 ];
+
+export const hackTabs = [
+    {
+        _id: 1,
+        label: "About",
+    },
+    {
+        _id: 2,
+        label: "Skills",
+    },
+    {
+        _id: 3,
+        label: "References",
+    },
+    {
+        _id: 4,
+        label: "Members",
+    },
+];

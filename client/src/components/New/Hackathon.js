@@ -19,7 +19,7 @@ const Hackathon = ({ _id }) => {
         name: "",
         organiser: "",
         date: today,
-        members: "",
+        memberCount: "",
         about: "",
         repo: "",
         deployed: "",
@@ -41,7 +41,7 @@ const Hackathon = ({ _id }) => {
             } else if (label === "Organiser") {
                 return { ...e, organiser: val };
             } else if (label === "Members") {
-                return { ...e, members: val < 0 ? 0 : Number(val) };
+                return { ...e, memberCount: val < 0 ? 0 : Number(val) };
             } else if (label === "About") {
                 return { ...e, about: val };
             } else if (label === "Repo") {
@@ -399,7 +399,7 @@ const Hackathon = ({ _id }) => {
                             required
                             type="number"
                             name="Members"
-                            value={h.members}
+                            value={h.memberCount}
                             style={{ fontWeight: "bold" }}
                             className="mt-3"
                             onChange={singleChangeHandler}
@@ -636,7 +636,7 @@ const Hackathon = ({ _id }) => {
                     <h6 className="mt-4">No college preference</h6>
                 )}
                 {h.clgPref.length > 0 && h.clgPref.map((clg) => (
-                    <Col sm={6} md={4} lg={3} xl={2} key={clg._id}>
+                    <Col sm={6} lg={4} key={clg._id}>
                         <FloatingLabel label={`College-${clg._id}`}>
                             <Form.Control
                                 required

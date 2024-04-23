@@ -190,6 +190,7 @@ const Certificates = ({ url_id }) => {
                     {c.length > 0 &&
                         c.map((cert) => (
                             <Row key={cert._id} id={cert._id}>
+                                <b>Certificate - {cert._id}</b>
                                 <Col sm={6} lg={5}>
                                     <FloatingLabel
                                         type="text"

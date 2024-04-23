@@ -85,6 +85,21 @@ const Education = ({ url_id }) => {
         });
     };
 
+    const checkHandler = (event) => {
+        const _id = event.target.id;
+        const val = event.target.checked;
+
+        setEdu((e) => {
+            return e.map((obj) => {
+                if (String(obj._id) === _id) {
+                    return { ...obj, to: val === true ? "Present" : "" };
+                }
+
+                return obj;
+            });
+        });
+    };
+
     const deleteHandler = (event) => {
         const _id = event.target.id;
         var count = 1;
@@ -172,6 +187,7 @@ const Education = ({ url_id }) => {
                     {edu.length > 0 &&
                         edu.map((ed) => (
                             <Row key={ed._id}>
+                                <b>Education - {ed._id}</b>
                                 <Col lg={5} xl={3}>
                                     <FloatingLabel
                                         type="text"
@@ -265,7 +281,11 @@ const Education = ({ url_id }) => {
                                     <FloatingLabel type="text" label="To">
                                         <Form.Control
                                             id={ed._id}
-                                            type="month"
+                                            type={
+                                                ed.to === "Present"
+                                                    ? "text"
+                                                    : "month"
+                                            }                                            
                                             name="To"
                                             value={ed.to}
                                             style={{ fontWeight: "bold" }}
@@ -275,14 +295,25 @@ const Education = ({ url_id }) => {
                                             onChange={changeHandler}
                                         />
                                     </FloatingLabel>
-                                </Col>
-                                <div className="d-flex justify-content-end mt-2 mb-1">
+                                </Col>                                
+                                <div className="d-flex justify-content-between mt-2 mb-1">
+                                    <Form.Check
+                                        type="checkbox"
+                                        label="Currently Pursuing"
+                                        name="Pursuing"
+                                        id={ed._id}
+                                        onChange={checkHandler}
+                                        checked={
+                                            ed.to === "Present" ? true : false
+                                        }
+                                        disabled={saving || loading}
+                                    />
                                     <Button
                                         variant="danger"
                                         onClick={deleteHandler}
                                         id={ed._id}
-                                        disabled={loading || saving}
                                         size="sm"
+                                        disabled={saving || loading}
                                     >
                                         Delete <MdOutlineDelete size={20} />
                                     </Button>

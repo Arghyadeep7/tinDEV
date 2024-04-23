@@ -7,7 +7,7 @@ const hackSchema = new mongoose.Schema({
   organiser: String,
   date: String,
   about: String,
-  count: Number,
+  memberCount: Number,
   cost: Number,
   repo: String,
   deployed: String,

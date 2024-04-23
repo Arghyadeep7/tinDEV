@@ -48,7 +48,7 @@ const Header = () => {
         },
         {
             label: "Connect",
-            url: "/connect",
+            url: "/connect/" + _id,
         },
         {
             label: "Interests",
