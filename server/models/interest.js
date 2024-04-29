@@ -2,15 +2,8 @@
 const mongoose = require("mongoose");
 
 const hackSchema = new mongoose.Schema({
-    _id: String,
-    fname: String,
-    lname: String,
-    email: String,
-    college: String,
-    hackId: String,
-    name: String,
-    organiser: String,
-    date: String,
+    _id: String,    
+    hackId: String,    
 });
 
 const interestSchema = new mongoose.Schema({

@@ -1,18 +1,9 @@
 
 const mongoose = require("mongoose");
 
-const hackSchema = new mongoose.Schema({
-    _id: String,
-    name: String,
-    organiser: String,
-    owner: String,
-    ownerId: String,
-    date: String,
-});
-
 const collabSchema = new mongoose.Schema({
   _id: String,
-  hackArr: [hackSchema]
+  hackArr: [String]
 });
 
 const Collab = mongoose.model("Collab", collabSchema);

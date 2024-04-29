@@ -309,8 +309,10 @@ const Hackathon = ({ _id }) => {
             ], 
         };
 
+        console.log(obj);
+
         const response = await fetch(
-            process.env.REACT_APP_FETCH_URL + "/hackathons/" + _id,
+            process.env.REACT_APP_FETCH_URL + "/collabs/" + _id,
             {
                 method: "POST",
                 headers: {

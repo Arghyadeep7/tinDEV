@@ -112,7 +112,7 @@ const App = () => {
                 <Route
                     path="/interests"
                     element={
-                        loggedIn ? <Interests /> : <Navigate to="/signin" />
+                        loggedIn ? <Interests _id={_id} /> : <Navigate to="/signin" />
                     }
                 />
                 <Route

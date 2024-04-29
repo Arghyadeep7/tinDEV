@@ -2,7 +2,7 @@ const express = require("express");
 const ObjectId = require("mongoose").Types.ObjectId;
 const router = express.Router();
 
-const User = require("../models/Account/user");
+const User = require("../../models/Account/user");
 
 router.get("/:_id", async (req, res, next) => {
     try {

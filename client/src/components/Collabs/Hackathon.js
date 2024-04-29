@@ -8,12 +8,28 @@ import { IoOpenOutline } from "react-icons/io5";
 
 const Hackathon = ({ _id }) => {
     const [h, setH] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(true);      
+
+    const hackathon = async(_id) => {
+        const response = await fetch(
+            process.env.REACT_APP_FETCH_URL + "/hackathons/" + _id,
+            {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                },                    
+            }
+        ).then((res) => res.json());
+
+        // console.log(response);
+
+        setH((arr) => [...arr, response]);
+    };
 
     useEffect(() => {
-        const request = async () => {
+        const collabs = async () => {
             const response = await fetch(
-                process.env.REACT_APP_FETCH_URL + "/hackathons/" + _id,
+                process.env.REACT_APP_FETCH_URL + "/collabs/" + _id,
                 {
                     method: "GET",
                     headers: {
@@ -22,12 +38,24 @@ const Hackathon = ({ _id }) => {
                 }
             ).then((res) => res.json());
 
-            console.log(response);
+            // console.log(response);            
 
-            setH(response.arr);
+            return response.hackArr;
         };
+
+        const request = async () => {
+            const arr = await collabs();
+            console.log(arr);
+
+            for(var i=0; i<arr.length; i++){
+                console.log(arr[i]);
+                hackathon(arr[i]);
+            }
+        }    
+        
         request();
-        setLoading(false);
+        
+        setLoading(false);        
     }, [_id]);
 
     return (
@@ -57,6 +85,7 @@ const Hackathon = ({ _id }) => {
                             lg={3}
                             className="mt-3 pe-2"
                             style={{ overflow: "hidden" }}
+                            key={proj._id}
                         >
                             <h5>{proj.name}</h5>
                             <i>
@@ -68,21 +97,21 @@ const Hackathon = ({ _id }) => {
                             <div>
                                 Members -{" "}
                                 <b>
-                                    {proj.members}/{proj.total}
+                                    {proj.memberCount}
                                 </b>
                             </div>
                             <h6>Last Enrollment Date - {proj.date}</h6>
                             <hr />
                             <div className="d-flex justify-content-between mt-3">
-                                <a
-                                    href={proj.id}
-                                    className="d-flex justify-content-end"
+                                <Link
+                                    to={`/account/${proj.ownerId}`}
+                                    className="d-flex justify-content-start"
                                     style={{ color: "red" }}
                                 >
                                     Contact Owner <IoOpenOutline size={20} />
-                                </a>
+                                </Link>
                                 <Link
-                                    to={`/hackathon/${proj.id}`}
+                                    to={`/hackathon/${proj._id}`}
                                     className="d-flex justify-content-end"
                                 >
                                     Open <IoOpenOutline size={20} />

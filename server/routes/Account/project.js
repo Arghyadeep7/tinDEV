@@ -2,13 +2,13 @@ const express = require("express");
 const ObjectId = require("mongoose").Types.ObjectId;
 const router = express.Router();
 
-const Link = require("../models/Account/link");
+const Project = require("../../models/Account/project");
 
 router.get("/:_id", async (req, res, next) => {
   try {
     const _id = req.params._id;
 
-    await Link.collection.findOne({ _id }, (err, result) => {
+    await Project.collection.findOne({ _id }, (err, result) => {
       if (err) {
         return res.json({
           code: 500,
@@ -38,9 +38,9 @@ router.post("/:_id", async (req, res, next) => {
 
     const arr = req.body;    
 
-    const _id = req.params._id;    
+    const _id = req.params._id;
 
-    await Link.collection.replaceOne({ _id }, {_id, arr}, (err, result) => {
+    await Project.collection.replaceOne({ _id }, {_id, arr}, (err, result) => {
       if (err) {
         return res.json({
           code: 500,
@@ -58,6 +58,7 @@ router.post("/:_id", async (req, res, next) => {
     });
 
   } catch (err) {
+
     return res.json({
       code: 500,
       success: false,

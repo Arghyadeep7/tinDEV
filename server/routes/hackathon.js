@@ -3,157 +3,71 @@ const ObjectId = require("mongoose").Types.ObjectId;
 const router = express.Router();
 
 const Hackathon = require("../models/hackathon");
-const Collab = require("../models/collab");
 
 router.get("/:_id", async (req, res, next) => {
-  try{
+    try {
+        const _id = new ObjectId(req.params._id);
 
-    const ownerId = req.params._id;
-
-    console.log(ownerId, "here");
-
-    await Hackathon.collection.find({ ownerId: ownerId }, (err, result) => {
-      if (err) {
-        return res.json({
-          code: 500,
-          success: false,
-          message: "ERROR OCCURRED-" + err.message,
+        await Hackathon.collection.findOne({ _id }, (err, result) => {
+            if (err) {
+                return res.json({
+                    code: 500,
+                    success: false,
+                    message: "ERROR OCCURRED-" + err.message,
+                });
+            } else {
+                return res.json({
+                    code: 200,
+                    success: true,
+                    message: "HACKATHON FOUND",
+                    ...result,
+                });
+            }
         });
-      } else {
-
-        console.log(result);
+    } catch (err) {
         return res.json({
-          code: 200,
-          success: true,
-          message: "HACKATHON FOUND",
-          arr: result,
+            code: 500,
+            success: false,
+            message: "ERROR OCCURRED-" + err.message,
         });
-      }
-    });
-  }catch (err) {
-    return res.json({
-      code: 500,
-      success: false,
-      message: "ERROR OCCURRED-" + err.message,
-    });
-  }
-});
-
-router.get("/hackPage/:_id", async (req, res, next) => {
-  try {
-    const _id = new ObjectId(req.params._id);    
-
-    await Hackathon.collection.findOne({ _id }, (err, result) => {
-      if (err) {
-        return res.json({
-          code: 500,
-          success: false,
-          message: "ERROR OCCURRED-" + err.message,
-        });
-      } else {
-        return res.json({
-          code: 200,
-          success: true,
-          message: "HACKATHON FOUND",
-          arr: result,
-        });
-      }
-    });
-  } catch (err) {
-    return res.json({
-      code: 500,
-      success: false,
-      message: "ERROR OCCURRED-" + err.message,
-    });
-  }
-});
-
-router.post("/hackPage/:_id", async (req, res, next) => {
-  try {
-    const _id = new ObjectId(req.params._id);
-    const data = req.body;
-
-    delete data._id;    
-
-    await Hackathon.collection.replaceOne({ _id }, data, (err, result) => {
-      if (err) {
-        return res.json({
-          code: 500,
-          success: false,
-          message: "ERROR OCCURRED-" + err.message,
-        });
-      } else {
-        return res.json({
-          code: 200,
-          success: true,
-          message: "HACKATHON UPDATED",
-          ...result,
-        });
-      }
-    });
-  } catch (err) {
-    return res.json({
-      code: 500,
-      success: false,
-      message: "ERROR OCCURRED-" + err.message,
-    });
-  }
+    }
 });
 
 router.post("/:_id", async (req, res, next) => {
-  try {
-    const data = req.body;
-    const _id = new ObjectId();
+    try {
+        const _id = new ObjectId(req.params._id);
+        const data = req.body;
+        
+        delete data._id;
+        delete data.code;
+        delete data.success;
+        delete data.message;
 
-    const response = await new Hackathon({
-      _id,
-      ...data,      
-    }).save();
+        // console.log(data);
 
-    const hackId = response._id.toString();
-    const ownerId = req.params._id;
-
-    await Collab.collection.updateOne(
-      { _id: ownerId },
-      {
-        $push: {
-          hackArr: {
-            $position: 0,
-            $each: [
-              {
-                _id: hackId,
-                name: data.name,
-                organiser: data.organiser,
-                owner: data.owner,
-                ownerId: ownerId,
-                date: data.date,
-              },
-            ],
-          },
-        },
-      },
-      (err, result) => {
-        return res.json({
-          code: result === null ? 400 : 200,
-          success: true,
-          hackId: hackId,
-          hackMessage: "HACKATHON SUCCESSFULLY CREATED",
-          ownerId: _id,
-          userMessage:
-            result === null
-              ? "OWNER NOT UPDATED"
-              : "OWNER SUCCESSFULLY UPDATED",
-          ...result,
+        await Hackathon.collection.replaceOne({ _id }, data, (err, result) => {
+            if (err) {
+                return res.json({
+                    code: 500,
+                    success: false,
+                    message: "ERROR OCCURRED-" + err.message,
+                });
+            } else {
+                return res.json({
+                    code: 200,
+                    success: true,
+                    message: "HACKATHON UPDATED",
+                    ...result,
+                });
+            }
         });
-      }
-    );
-  } catch (err) {
-    return res.json({
-      code: 500,
-      success: false,
-      message: "ERROR OCCURRED-" + err.message,
-    });
-  }
+    } catch (err) {
+        return res.json({
+            code: 500,
+            success: false,
+            message: "ERROR OCCURRED-" + err.message,
+        });
+    }
 });
 
 module.exports = router;

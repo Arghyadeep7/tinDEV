@@ -24,7 +24,7 @@ const HackPage = () => {
         const request = async () => {
             const response = await fetch(
                 process.env.REACT_APP_FETCH_URL +
-                    "/hackathons/hackPage/" +
+                    "/hackathons/" +
                     url_id,
                 {
                     method: "GET",
@@ -36,7 +36,7 @@ const HackPage = () => {
 
             console.log(response);
 
-            setH(response.arr);
+            setH(response);
         };
         request();
         console.log("here");
@@ -305,7 +305,7 @@ const HackPage = () => {
         setSubmit(true);
 
         const response = await fetch(
-            process.env.REACT_APP_FETCH_URL + "/hackathons/hackPage/" + url_id,
+            process.env.REACT_APP_FETCH_URL + "/hackathons/" + url_id,
             {
                 method: "POST",
                 headers: {

@@ -2,7 +2,7 @@ const express = require("express");
 const ObjectId = require("mongoose").Types.ObjectId;
 const router = express.Router();
 
-const Experience = require("../models/Account/experience");
+const Experience = require("../../models/Account/experience");
 
 router.get("/:_id", async (req, res, next) => {
   try {

@@ -8,7 +8,7 @@ import { Row, Col } from "react-bootstrap";
 
 import styles from "../../styles/Common.module.css";
 
-const AAA = () => {
+const AAA = ({ _id }) => {
   const [active, setActive] = useState("Hackathon");  
 
   return (
@@ -51,7 +51,7 @@ const AAA = () => {
       </Col>
       <Col sm={12} md={10} style={{ position: "relative" }} className="mt-2">
         <div className={styles.common}>
-          {active === "Hackathon" && <Hackathon />}
+          {active === "Hackathon" && <Hackathon _id={_id} />}
         </div>
       </Col>
     </Row>
