@@ -4,14 +4,14 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { login, logout } from "./store/AccountSlice";
 
-import Header from "./components/Header";
-import SignUp from "./components/Forms/SignUp";
-import SignIn from "./components/Forms/SignIn";
-import Interests from "./components/Interests/AAA";
-import Collabs from "./components/Collabs/AAA";
-import New from "./components/New/AAA";
-import Account from "./components/Account/AAA";
-import Connect from "./components/Connect/AAA";
+import Header from "./Components/Header";
+import SignUp from "./Components/Forms/SignUp";
+import SignIn from "./Components/Forms/SignIn";
+import Interests from "./Components/Interests/AAA";
+import Collabs from "./Components/Collabs/AAA";
+import New from "./Components/New/AAA";
+import Account from "./Components/Account/AAA";
+import Connect from "./Components/Connect/AAA";
 import HackPage from "./Pages/HackPage";
 
 import { Container } from "react-bootstrap";

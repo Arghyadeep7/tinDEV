@@ -83,6 +83,7 @@ const Hackathon = ({ _id }) => {
                         "Content-Type": "application/json",
                     },
                     body: JSON.stringify({
+                        _id: hackId,
                         receiverId: _id,
                         senderId,
                         fname,

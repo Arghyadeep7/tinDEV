@@ -98,19 +98,20 @@ router.post("/:_id", async (req, res, next) => {
 
 router.post("/:_id/accept", async (req, res, next) => {
     try {
-        const _id = req.params._id;
-        const data = req.body;
+        const _id = req.params._id;        
 
-        const { senderId, receiverId } = data.receiverId;
+        console.log(req.body);
+
+        const data = req.body;
         
-        var response = {};
+        var response = {};        
 
         await Hackathon.collection.updateOne(
             { _id: new ObjectId(_id) },
             {
                 $push: {
                     members: {
-                        _id: receiverId,
+                        _id: data.receiverId,
                         fname: data.fname,
                         lname: data.lname,
                         email: data.email,
@@ -123,12 +124,14 @@ router.post("/:_id/accept", async (req, res, next) => {
             },
             (err, result) => {
                 if (err) {
-                    return res.json({
+                    // console.log(err, "-1");
+                    res.json({
                         code: 500,
                         success: false,
                         message: "ERROR OCCURRED-" + err.message,
                     });
                 } else {
+                    // console.log(result, "-1");
                     response = {
                         hackCode: 200,
                         hackSuccess: true,
@@ -136,13 +139,14 @@ router.post("/:_id/accept", async (req, res, next) => {
                     };
                 }
             }
-        );
+        );        
 
         await Collab.collection.updateOne(
-            { _id: receiverId },
+            { _id: data.receiverId },
             {
                 $push: {
                     hackArr: {
+                        $position: 0,
                         $each: [
                             _id
                         ],
@@ -151,13 +155,15 @@ router.post("/:_id/accept", async (req, res, next) => {
                 },
             },
             (err, result) => {
-                if (err) {
-                    return res.json({
+                if (err) {                
+                    console.log(err, "-2");    
+                    res.json({
                         code: 500,
                         success: false,
                         message: "ERROR OCCURRED-" + err.message,
                     });
                 } else {
+                    // console.log(result, "-2");
                     response = {
                         ...response,
                         collabCode: 200,
@@ -169,52 +175,56 @@ router.post("/:_id/accept", async (req, res, next) => {
         );        
 
         await Interest.collection.updateOne(
-            { _id: senderId },
+            { _id: data.senderId },
             {
                 $pull: {
                     "hackArr.sent": {
-                        _id: senderId,
+                        _id: data.senderId,
                         hackId: _id,
                     },
                 },
             },
             (err, result) => {
                 if (err) {
-                    return res.json({
+                    console.log(err, "-3");
+                    res.json({
                         code: 500,
                         success: false,
                         message: "ERROR OCCURRED-" + err.message,
                     });
                 } else {
-                    return res.json({
+                    // console.log(result, "-3");
+                    response = {
                         ...response,
                         interestCode: 200,
                         interestSuccess: true,
                         interestMessage: "INTEREST ACCEPTED",
-                    });
+                    };
                 }
             }
         );
 
         await Interest.collection.updateOne(
-            { _id: receiverId },
+            { _id: data.receiverId },
             {
                 $pull: {
                     "hackArr.received": {
-                        _id: senderId,
+                        _id: data.senderId,
                         hackId: _id,
                     },
                 },
             },
             (err, result) => {
                 if (err) {
-                    return res.json({
+                    console.log(err, "-4");
+                    res.json({
                         code: 500,
                         success: false,
                         message: "ERROR OCCURRED-" + err.message,
                     });
                 } else {
-                    return res.json({
+                    // console.log(result, "-4");
+                    res.json({
                         ...response,
                         interestCode: 200,
                         interestSuccess: true,
@@ -223,8 +233,9 @@ router.post("/:_id/accept", async (req, res, next) => {
                 }
             }
         );
+        
     } catch (err) {
-        return res.json({
+        res.json({
             code: 500,
             success: false,
             message: "ERROR OCCURRED-" + err.message,

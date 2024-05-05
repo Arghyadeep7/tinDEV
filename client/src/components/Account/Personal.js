@@ -49,10 +49,6 @@ const Personal = ({ url_id }) => {
             setP((oldP) => {
                 return { ...oldP, email: val.trim() };
             });
-        } else if (label === "Password") {
-            setP((oldP) => {
-                return { ...oldP, password: val };
-            });
         } else if (label === "Date of Birth") {
             setP((oldP) => {
                 return { ...oldP, dob: val };
@@ -183,6 +179,7 @@ const Personal = ({ url_id }) => {
                     </div>
                     <Row>
                         {account.map((detail) => (
+                            detail.label !== "Password" &&
                             <Col sm={6} md={4} lg={3} key={detail.label}>
                                 <FloatingLabel type="text" label={detail.label}>
                                     {detail.type === "select" ? (
@@ -203,7 +200,7 @@ const Personal = ({ url_id }) => {
                                                 </option>
                                             ))}
                                         </Form.Select>
-                                    ) : (
+                                    ) : (                                        
                                         <Form.Control
                                             required={detail.required}
                                             type={detail.type}

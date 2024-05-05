@@ -49,8 +49,9 @@ const AAA = ({ _id }) => {
             //console.log(response);
 
             if(url === "account"){
-                setP(response.user);
+                setP(response.user);                
                 setHacks(response.user.hackathons);
+                
                 if(response.user.hackathons.length>0){
                     // console.log(response.user.hackathons);
                     setSelected(response.user.hackathons[0]._id);
@@ -177,78 +178,85 @@ const AAA = ({ _id }) => {
                         </div>
                     </Row>
 
-                    {/* Web Tabs */}
-                    <Col md={2} className="mt-1 d-none d-md-block">
-                        {tabs.map((acc) => (
-                            <h6
-                                onClick={() => setActive(acc.label)}
-                                style={{
-                                    color: active === acc.label && "blue",
-                                    borderBottom:
-                                        active === acc.label &&
-                                        "2px solid blue",
-                                    cursor: "pointer",
-                                }}
-                                className="p-2"
-                                key={acc.label}
-                            >
-                                {acc.label}
-                            </h6>
-                        ))}
-                    </Col>
+                    {
+                        hacks.length === 0?
+                        <h4 className="mt-3">Create a project to connect to developers!</h4>
+                        :
+                        <>
+                            {/* Web Tabs */}
+                            <Col md={2} className="mt-1 d-none d-md-block">
+                                {tabs.map((acc) => (
+                                    <h6
+                                        onClick={() => setActive(acc.label)}
+                                        style={{
+                                            color: active === acc.label && "blue",
+                                            borderBottom:
+                                                active === acc.label &&
+                                                "2px solid blue",
+                                            cursor: "pointer",
+                                        }}
+                                        className="p-2"
+                                        key={acc.label}
+                                    >
+                                        {acc.label}
+                                    </h6>
+                                ))}
+                            </Col>
 
-                    {/* Mobile Tabs */}
-                    <Col
-                        md={2}
-                        className={`me-5 d-md-none d-flex ${styles.mobile}`}
-                    >
-                        {tabs.map((acc) => (
-                            <h6
-                                onClick={() => setActive(acc.label)}
-                                style={{
-                                    color: active === acc.label && "blue",
-                                    borderBottom:
-                                        active === acc.label &&
-                                        "2px solid blue",
-                                    cursor: "pointer",
-                                }}
-                                className="p-1 me-3"
-                                key={acc.label}
+                            {/* Mobile Tabs */}
+                            <Col
+                                md={2}
+                                className={`me-5 d-md-none d-flex ${styles.mobile}`}
                             >
-                                {acc.label}
-                            </h6>
-                        ))}
-                    </Col>
+                                {tabs.map((acc) => (
+                                    <h6
+                                        onClick={() => setActive(acc.label)}
+                                        style={{
+                                            color: active === acc.label && "blue",
+                                            borderBottom:
+                                                active === acc.label &&
+                                                "2px solid blue",
+                                            cursor: "pointer",
+                                        }}
+                                        className="p-1 me-3"
+                                        key={acc.label}
+                                    >
+                                        {acc.label}
+                                    </h6>
+                                ))}
+                            </Col>
 
-                    {/* Content */}
-                    <Col
-                        sm={12}
-                        md={10}
-                        style={{ position: "relative" }}
-                        className="mt-2"
-                    >
-                        <div className={styles.common}>
-                            {active === "Personal" && <Personal p={p} />}
-                            {active === "Education" && (
-                                <Education edu={edu} />
-                            )}
-                            {active === "Experience" && (
-                                <Experience w={w} />
-                            )}
-                            {active === "Projects" && (
-                                <Projects proj={proj} />
-                            )}
-                            {active === "Skills" && (
-                                <Skills s={s} />
-                            )}
-                            {active === "Certificates" && (
-                                <Certificates c={c} />
-                            )}
-                            {active === "Links" && (
-                                <Links l={l} />
-                            )}
-                        </div>
-                    </Col>
+                            {/* Content */}
+                            <Col
+                                sm={12}
+                                md={10}
+                                style={{ position: "relative" }}
+                                className="mt-2"
+                            >
+                                <div className={styles.common}>
+                                    {active === "Personal" && <Personal p={p} />}
+                                    {active === "Education" && (
+                                        <Education edu={edu} />
+                                    )}
+                                    {active === "Experience" && (
+                                        <Experience w={w} />
+                                    )}
+                                    {active === "Projects" && (
+                                        <Projects proj={proj} />
+                                    )}
+                                    {active === "Skills" && (
+                                        <Skills s={s} />
+                                    )}
+                                    {active === "Certificates" && (
+                                        <Certificates c={c} />
+                                    )}
+                                    {active === "Links" && (
+                                        <Links l={l} />
+                                    )}
+                                </div>
+                            </Col>
+                        </>
+                    }
                 </Row>
             )}
         </Fragment>

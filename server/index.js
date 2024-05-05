@@ -9,8 +9,9 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 
 app.use(express.json());
-app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(
     cors({
         origin: "http://localhost:3000",
@@ -58,3 +59,6 @@ app.use("/collabs", collab);
 
 const interest = require("./routes/interest");
 app.use("/interests", interest);
+
+const ml = require("./routes/ML");
+app.use("/ml", ml);

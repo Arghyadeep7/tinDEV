@@ -19,7 +19,7 @@ const Projects = ({ proj }) => {
             {proj.length === 0 && <h5 className="mt-4">No Project entered.</h5>}
             {proj.length > 0 &&
                 proj.map((proj) => (
-                    <Row key={proj._id}>
+                    <Row key={proj._id} className="mt-3">
                         <b>Project - {proj._id}</b>
                         <Col sm={5} lg={4}>
                             <FloatingLabel type="text" label="Name">
