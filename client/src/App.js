@@ -39,7 +39,8 @@ const App = () => {
                 },                
             ).then((res) => res.json());
                  
-            if (response.code === 200) {
+            console.log('here');
+            if (response.code === 200) {                
                 dispatch(
                     login({
                         _id: response.user._id,

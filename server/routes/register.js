@@ -1,7 +1,6 @@
 const express = require("express");
 const ObjectId = require("mongodb").ObjectId;
 const router = express.Router();
-
 const bcrypt = require("bcryptjs");
 
 const User = require("../models/Account/user");
